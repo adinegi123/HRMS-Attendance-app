@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "239702932292",
+    "project_id": "hrms-attendance-app",
+    "storage_bucket": "hrms-attendance-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239702932292:android:460e6fb015c5861181b511",
+        "android_client_info": {
+          "package_name": "com.example.attendance_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCXslZmyhEKowPp1gwCCttuX5Jn5NJ0v4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
