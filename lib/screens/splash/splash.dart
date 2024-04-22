@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:attendance_app/routes/route_const.dart';
 import 'package:attendance_app/screens/login/login.dart';
 import 'package:flutter/material.dart';
 
@@ -11,17 +12,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late Timer _timer;
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5), () {
+    _timer=Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Login(),
+          builder: (context) =>  Login(formKey: GlobalKey<FormState>() ,),
         ),
       );
     });
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _timer.cancel();
+    super.dispose();
   }
 
   @override

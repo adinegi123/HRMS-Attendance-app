@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class Buttons extends StatelessWidget {
   final void Function()? onTap;
-  final Widget child;
-  Buttons({
+  final String buttonText;
+
+  const Buttons({
     super.key,
     required this.onTap,
-    required this.child
+    required this.buttonText,
   });
 
   @override
@@ -19,8 +20,16 @@ class Buttons extends StatelessWidget {
           color: Colors.deepPurple.shade300,
           borderRadius: BorderRadius.circular(12),
         ),
-        padding: EdgeInsets.all(25),
-        child: child,
+        padding: const EdgeInsets.all(15),
+        child: Text(
+          buttonText,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+          ),
+        ),
       ),
     );
   }

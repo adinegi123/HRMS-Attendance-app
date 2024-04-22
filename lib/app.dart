@@ -1,20 +1,34 @@
-import 'package:attendance_app/screens/home/homepage.dart';
-import 'package:attendance_app/screens/splash/splash.dart';
+import 'package:attendance_app/providers/bottom_navbar_provider.dart';
+import 'package:attendance_app/providers/password_visibility_provider.dart';
+import 'package:attendance_app/routes/route_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
+  static PasswordVisibilityProvider passwordVisibility =
+      PasswordVisibilityProvider();
+  static BottomNavBarProvider bottomNavBar = BottomNavBarProvider();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Attendance App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: passwordVisibility),
+        ChangeNotifierProvider.value(value: bottomNavBar),
+      ],
+      child: MaterialApp(
+        title: 'Attendance App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.onGenerateRoute,
       ),
-      home: const SplashScreen(),
     );
   }
 }
