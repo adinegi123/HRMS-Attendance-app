@@ -1,59 +1,37 @@
-import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+import 'package:attendance_app/components/custom_popup.dart';
+import 'package:attendance_app/providers/image_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import '../../class/constant.dart';
 import '../../components/custom_text_widget.dart';
 import '../../components/my_textfields.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ProfilePage extends StatelessWidget {
-  final TextEditingController EmployeeName = TextEditingController();
-  final TextEditingController EmployeeId = TextEditingController();
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final TextEditingController employeeName = TextEditingController();
+  final TextEditingController employeeId = TextEditingController();
   final TextEditingController DOB = TextEditingController();
   final TextEditingController designation = TextEditingController();
-  final TextEditingController AddressController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  late File? image;
 
-  void showImagePicker(BuildContext context){
-    showModalBottomSheet(context: context, builder: (builder){
-      return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/7,
-          child: Row(
-            children: [
-              Expanded(
-                child: InkWell(
-                  onTap: (){},
-                  child: const SizedBox(
-                    child: Column(
-                      children: [
-                        Icon(Icons.image,size: 50,),
-                        Text("Gallery")
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: (){},
-                  child: const SizedBox(
-                    child: Column(
-                      children: [
-                        Icon(Icons.camera_alt,size: 50,),
-                        Text("Camera")
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-    );
+  @override
+  void dispose() {
+    employeeName.dispose();
+    employeeId.dispose();
+    DOB.dispose();
+    designation.dispose();
+    addressController.dispose();
+    super.dispose();
   }
 
   @override
@@ -65,31 +43,38 @@ class ProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20,),
-            Stack(
+            Consumer<ImagePickerProvider>(
+              builder: (context, value, child) {
+            return Stack(
               children: [
-                Center(
+                const Center(
                   child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage(Images.iconProfileImg),
+                    radius: 60,
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.person_outline, size: 70,),
                   ),
                 ),
                 Positioned(
-                  right: 150,
-                    bottom: -7,
-                    child:IconButton(onPressed: (){
-                      showImagePicker(context);
-                    }, icon: const Icon(Icons.add_a_photo),color: Colors.white,))
+                  right: 145,
+                    bottom: 1,
+                    child:CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.black54,
+                      child: IconButton(onPressed: (){
+                        CustomPopup.showImagePickerPopup(context: context);
+                      }, icon: const Icon(Icons.add_a_photo,size: 20,),color: Colors.white,),
+                    ))
               ],
-            ),
+            );}),
             const SizedBox(height: 20,),
             const MyTextWidget(text: "Name"),
             MyTextField(
                 hintText: "Employee Name",
-                controller: EmployeeName),
+                controller: employeeName),
             const MyTextWidget(text: "Employee Id"),
             MyTextField(
                 hintText: "Employee Id",
-                controller: EmployeeId),
+                controller: employeeId),
             const MyTextWidget(text: "Date Of Birth"),
             MyTextField(
                 hintText: "Enter Your DOB",
@@ -101,7 +86,7 @@ class ProfilePage extends StatelessWidget {
             const MyTextWidget(text: "Address"),
             MyTextField(
                 hintText: "Enter Address",
-                controller: AddressController)
+                controller: addressController)
           ],
         ),
       ),

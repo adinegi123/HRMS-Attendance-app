@@ -21,7 +21,7 @@ class MyTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
       child: Text(
         text,
         style: style ?? CustomTextStyles.defaultTextStyle,

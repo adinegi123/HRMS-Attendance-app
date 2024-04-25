@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 class Buttons extends StatelessWidget {
   final void Function()? onTap;
-  final String buttonText;
+  final Widget? buttonText;
+  final double? width;
 
   const Buttons({
     super.key,
     required this.onTap,
-    required this.buttonText,
+    required this.buttonText, this.width,
   });
 
   @override
@@ -15,21 +16,13 @@ class Buttons extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.width-80,
+        width: width?? MediaQuery.of(context).size.width-80,
         decoration: BoxDecoration(
           color: Colors.deepPurple.shade300,
           borderRadius: BorderRadius.circular(12),
         ),
         padding: const EdgeInsets.all(15),
-        child: Text(
-          buttonText,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-          ),
-        ),
+        child: buttonText,
       ),
     );
   }
