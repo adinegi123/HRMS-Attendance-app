@@ -1,4 +1,3 @@
-
 import 'package:attendance_app/components/secondary_appbar.dart';
 import 'package:attendance_app/providers/bottom_navbar_provider.dart';
 import 'package:attendance_app/screens/calender_page/calender_page.dart';
@@ -25,7 +24,7 @@ class _HomeState extends State<Home> {
         final List<Widget> pages = [
            const DashBoard(),
           const CalendarPage(),
-          const ProfilePage(),
+          ProfilePage(),
         ];
 
         return Scaffold(

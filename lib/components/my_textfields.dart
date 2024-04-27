@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../class/constant.dart';
+
 class MyTextField extends StatelessWidget {
   final String hintText;
   final bool? obscureText;
@@ -22,7 +24,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.only(left: 15, right: 15,bottom: 10),
       child: TextFormField(
         obscureText: obscureText??false,
         controller: controller,
@@ -38,7 +40,7 @@ class MyTextField extends StatelessWidget {
 
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.deepPurple.shade200)
+              borderSide: const BorderSide(color: borderSide)
           ),
 
           fillColor: Colors.white,

@@ -161,7 +161,7 @@ class _SignUpState extends State<SignUp> {
                       _confirmPwController.clear();
                     }
                   },
-                  buttonText: 'Sign up',
+                  buttonText: const Center(child: Text('Sign up')),
                 ),
                 const SizedBox(
                   height: 20,
