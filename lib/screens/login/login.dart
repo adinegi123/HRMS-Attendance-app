@@ -1,4 +1,3 @@
-
 import 'package:attendance_app/class/form%20validation.dart';
 import 'package:attendance_app/components/buttons.dart';
 import 'package:attendance_app/components/my_textfields.dart';
@@ -90,12 +89,12 @@ class _LoginState extends State<Login> {
                     const SizedBox(height: 50,),
                     Buttons(onTap: () {
                       if (widget._formKey.currentState!.validate()){
-                        Navigator.pushNamed(context, Routes.homePageRoute);
+                        Navigator.pushReplacementNamed(context, Routes.homePageRoute);
                         // _userName.clear();
                         // _passwordController.clear();
                       }
                     },
-                      buttonText: 'Login',),
+                      buttonText: const Center(child: Text('Login')),),
                     const SizedBox(height: 10,),
                     RichText(
                       text: TextSpan(
