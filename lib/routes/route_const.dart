@@ -3,6 +3,6 @@ class Routes {
   static const String loginPageRoute = "/login";
   static const String homePageRoute = "/login/home";
   static const String signUpPageRoute = "/signup";
-  static const String profilePageRoute = "/profile";
+  static const String profilePageRoute = "login/home/profile";
   static const String calenderPageRoute = "/calender";
 }
