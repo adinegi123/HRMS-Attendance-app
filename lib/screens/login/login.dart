@@ -53,7 +53,7 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.symmetric(horizontal: 28.0),
                       child: MyTextField(
                         hintText: "UserName",
-                        prefixIcon: Icon(Icons.person),
+                        prefixIcon: const Icon(Icons.person),
                         controller: _userName,
                         validator: (s) {
                           return FormValidationFunction.checkEmailId(s);
