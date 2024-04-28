@@ -93,10 +93,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       onTap: () {
                         try {
                           log("error");
-                          print("error in");
+                          log("error in");
                           showImagePicker(context);
                         } catch (e) {
-                          print("Error selecting image: $e");
+                          log("Error selecting image: $e");
                           // Handle error gracefully, e.g., show a snackbar
                         }
                         //showImagePicker(context);

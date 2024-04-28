@@ -1,16 +1,26 @@
+import 'dart:developer';
+
+import 'package:attendance_app/Firebase%20methods/firebase_methods.dart';
+import 'package:attendance_app/Local%20Database/local_database.dart';
 import 'package:attendance_app/class/form%20validation.dart';
 import 'package:attendance_app/class/utils.dart';
 import 'package:attendance_app/components/buttons.dart';
 import 'package:attendance_app/components/my_textfields.dart';
 import 'package:attendance_app/providers/password_visibility_provider.dart';
 import 'package:attendance_app/routes/route_const.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:random_string_generator/random_string_generator.dart';
+
+import '../../components/custom_popup.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key,
-    required GlobalKey<FormState> formKey,}): _formKey = formKey;
+  const SignUp({
+    super.key,
+    required GlobalKey<FormState> formKey,
+  }) : _formKey = formKey;
 
   final GlobalKey<FormState> _formKey;
 
@@ -31,6 +41,12 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
+  void clearControllers() {
+    _emailController.clear();
+    _passwordController.clear();
+    _confirmPwController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,61 +55,70 @@ class _SignUpState extends State<SignUp> {
           child: Form(
             key: widget._formKey,
             child: SingleChildScrollView(
-              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                const Text(
-                  "Sign Up",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  "Create Your Account",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                  child: MyTextField(
-                      hintText: "Email",
-                      prefixIcon: const Icon(Icons.email),
-                      validator: (s) {
-                        if (s == null || s.isEmpty) {
-                          return null;
-                        }
-                        if (!Utils.isEmail(s)) {
-                          return 'Please enter valid Email id';
-                        }
-                        return null;
-                      },
-                      controller: _emailController),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Sign Up",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      "Create Your Account",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                      child: MyTextField(
+                          hintText: "Email",
+                          keyboardType: TextInputType.emailAddress,
+                          prefixIcon: const Icon(Icons.email),
+                          validator: (s) {
+                            if (s == null || s.isEmpty) {
+                              return null;
+                            }
+                            if (!Utils.isEmail(s)) {
+                              return 'Please enter valid Email id';
+                            }
+                            return null;
+                          },
+                          controller: _emailController),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
 
-                // password provider
-                Consumer<PasswordVisibilityProvider>(
-                    builder: (context, value, child) {
+                    // password provider
+                    Consumer<PasswordVisibilityProvider>(
+                        builder: (context, value, child) {
                       return Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 28.0),
                             child: MyTextField(
                               hintText: "Password",
                               prefixIcon: const Icon(Icons.lock),
                               controller: _passwordController,
                               obscureText: !value.passwordVisibility,
                               validator: (s) {
-                                return FormValidationFunction.checkPassword(s, signUp: true, login: false);
+                                return FormValidationFunction.checkPassword(s,
+                                    signUp: true, login: false);
                               },
                               suffixIcon: GestureDetector(
                                 onTap: () {
                                   value.togglePasswordVisibility(
                                     passwordVisible: !value.passwordVisibility,
-                                    confirmPasswordVisible: value.confirmPasswordVisibility,);
+                                    confirmPasswordVisible:
+                                        value.confirmPasswordVisibility,
+                                  );
                                 },
                                 child: Icon(value.passwordVisibility
                                     ? Icons.visibility
@@ -105,13 +130,15 @@ class _SignUpState extends State<SignUp> {
                             height: 20,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 28.0),
                             child: MyTextField(
                                 hintText: "Confirm Password",
                                 prefixIcon: const Icon(Icons.lock),
                                 obscureText: !value.confirmPasswordVisibility,
                                 validator: (s) {
-                                  if (s!.trim() != _passwordController.text.trim()) {
+                                  if (s!.trim() !=
+                                      _passwordController.text.trim()) {
                                     return 'Password not same';
                                   }
                                   return null;
@@ -120,7 +147,8 @@ class _SignUpState extends State<SignUp> {
                                   onTap: () {
                                     value.togglePasswordVisibility(
                                       passwordVisible: value.passwordVisibility,
-                                      confirmPasswordVisible: !value.confirmPasswordVisibility,
+                                      confirmPasswordVisible:
+                                          !value.confirmPasswordVisibility,
                                     );
                                   },
                                   child: Icon(value.confirmPasswordVisibility
@@ -132,56 +160,104 @@ class _SignUpState extends State<SignUp> {
                         ],
                       );
                     }),
-                const SizedBox(
-                  height: 50,
-                ),
-                Buttons(
-                  onTap: () {
-                    if (widget._formKey.currentState!.validate()){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text("Registration Successful"),
-                            content: const Text("User successfully register, Go to login page"),
-                            actions:[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.pushNamed(context, Routes.loginPageRoute);
-                                },
-                                child: const Text("OK"),
-                              ),
-                            ],
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Buttons(
+                      onTap: () async {
+                        if (widget._formKey.currentState!.validate()) {
+                          CustomPopup.showProgressIndicator(context: context);
+                          UserCredential? userCredential = await FirebaseMethods.signUp(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                              context: context
                           );
-                        },
-                      );
-                      _emailController.clear();
-                      _passwordController.clear();
-                      _confirmPwController.clear();
-                    }
-                  },
-                  buttonText: const Center(child: Text('Sign up')),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                RichText(
-                  text: TextSpan(
-                      text: 'Already have account?',
-                      style: TextStyle(color: Colors.grey.shade700),
-                      children: [
-                        TextSpan(
-                          text: ' Login',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushNamed(context, Routes.loginPageRoute);
-                            },
-                        )
-                      ]),
-                ),
-              ]),
+                          if (userCredential != null) {
+                            log("userCredential$userCredential");
+                            var userUid = userCredential.user?.uid;
+                            log("userUid-->$userUid");
+                            await LocalDb.setUserUID(userUid!);
+                            var generator = RandomStringGenerator(fixedLength: 10);
+                            var userProfileUid =generator.generate();
+                            await LocalDb.setUserProfileUid(userProfileUid);
+                            var res = await FirebaseMethods.createUser(
+                              userUid: userUid,
+                              userProfileUid: userProfileUid,
+                              userName: 'aditi',
+                              userAge: '25',
+                              userAddress: 'xyz',
+                              userEmail: _emailController.text,
+                              associatedCluster: 'ABC',
+                              profileImageURL: '',
+                              mobileNumber: '9456315624',
+                              countryCode: '+91',
+                              stateCode: '',
+                              latLong: '28.5849° N, 77.3791° E',
+                              localityCode: '200',
+                              pinCode: '201309',
+                              password: _passwordController.text,
+                              ipAddress: '192.168.0.1',
+                              empDesignation: 'flutter developer',
+                              appVersion: '1.0',
+                              deviceType: 'Android',
+                              // Assuming _deviceType is an enum value
+                              loginTimeStamp: '10:00 am',
+                              logoutTimeStamp: '7:00 pm',
+                              floorCount: '2',
+                            );
+                            log("response $res");
+                            if (res == true) {
+                              CustomPopup.dismissProgressIndicator();
+                              Navigator.pushNamedAndRemoveUntil(context, Routes.homePageRoute, (route) => false);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Signed Up successfully!'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Something went wrong'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            }
+                          } else {
+                            Navigator.of(context).pop();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Failed to Siign Up'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                            clearControllers();
+                          }
+                        }
+                      },
+                      buttonText: const Center(child: Text('Sign up')),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                          text: 'Already have account?',
+                          style: TextStyle(color: Colors.grey.shade700),
+                          children: [
+                            TextSpan(
+                              text: ' Login',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pushNamed(
+                                      context, Routes.loginPageRoute);
+                                },
+                            )
+                          ]),
+                    ),
+                  ]),
             ),
           ),
         ));
