@@ -3,10 +3,9 @@ import 'package:attendance_app/providers/bottom_navbar_provider.dart';
 import 'package:attendance_app/screens/calender_page/calender_page.dart';
 import 'package:attendance_app/screens/dashboard/dashboard_view.dart';
 import 'package:attendance_app/screens/profile/profile_page.dart';
+import 'package:attendance_app/shared%20widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-
 
 
 class Home extends StatefulWidget {
@@ -24,7 +23,7 @@ class _HomeState extends State<Home> {
         final List<Widget> pages = [
            const DashBoard(),
           const CalendarPage(),
-          ProfilePage(),
+          const ProfilePage(),
         ];
 
         return Scaffold(
@@ -54,6 +53,7 @@ class _HomeState extends State<Home> {
               bottomNavBarProvider.setIndex(index);
             },
           ),
+          drawer: const Drawers(),
         );
       },
     );
