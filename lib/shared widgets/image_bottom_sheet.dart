@@ -29,86 +29,94 @@ Future<String?> uploadImage(
   return null;
 }
 
-
-void showImagePicker(BuildContext context){
-  showModalBottomSheet(context: context, builder: (builder){
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height/6,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const MyTextWidget(text: "Profile Photo"),
-            Row(
+void showImagePicker(BuildContext context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (builder) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 6,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: ()async {
-                      var res = await Permission.camera.request();
-                      if (res == PermissionStatus.granted) {
-                        await uploadImage(
-                            source: ImageSource.gallery, context: context);
-                      }else {
-                  var resImage = await uploadImage(
-                  source: ImageSource.gallery, context: context);
-                  }},
-                    child: const SizedBox(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Colors.white,
-                            child: Icon(Icons.image,size: 30,),
+                const MyTextWidget(text: "Profile Photo"),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () async {
+                          var res = await Permission.camera.request();
+                          if (res == PermissionStatus.granted) {
+                            await uploadImage(
+                                source: ImageSource.gallery, context: context);
+                          } else {
+                            var resImage = await uploadImage(
+                                source: ImageSource.gallery, context: context);
+                          }
+                        },
+                        child: const SizedBox(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.white,
+                                child: Icon(
+                                  Icons.image,
+                                  size: 30,
+                                ),
+                              ),
+                              MyTextWidget(
+                                text: "Gallery",
+                                style: TextStyle(fontSize: 14),
+                              )
+                            ],
                           ),
-                          MyTextWidget(text: "Gallery",style: TextStyle(
-                              fontSize: 14
-                          ),)
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-
-                Expanded(
-                  child: InkWell(
-                    onTap: () async {
-                      var res = await Permission.photos.request();
-                      if (res == PermissionStatus.granted) {
-                        await uploadImage(
-                            source: ImageSource.camera, context: context);
-                      } else {
-                        var resImage = await uploadImage(
-                            source: ImageSource.camera, context: context);
-                        if (resImage != null) {}
-                      }
-                    },
-                    child: const SizedBox(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Colors.white,
-                            child: Icon(Icons.camera_alt,size: 30,),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () async {
+                          var res = await Permission.photos.request();
+                          if (res == PermissionStatus.granted) {
+                            await uploadImage(
+                                source: ImageSource.camera, context: context);
+                          } else {
+                            var resImage = await uploadImage(
+                                source: ImageSource.camera, context: context);
+                            if (resImage != null) {}
+                          }
+                        },
+                        child: const SizedBox(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.white,
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  size: 30,
+                                ),
+                              ),
+                              MyTextWidget(
+                                text: "Camera",
+                                style: TextStyle(fontSize: 14),
+                              )
+                            ],
                           ),
-                          MyTextWidget(text: "Camera",style: TextStyle(
-                            fontSize: 14
-                          ),)
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-  );
+          ),
+        );
+      });
 }

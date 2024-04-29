@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'HRMS Attendence',
+              'HRMS Attendance',
               style: TextStyle(
                   fontSize: 35.0,
                   fontWeight: FontWeight.bold,
