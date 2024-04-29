@@ -1,6 +1,7 @@
 import 'package:image_cropper/image_cropper.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../components/buttons.dart';
 import '../providers/image_provider.dart';
@@ -59,7 +60,19 @@ class ImagePick extends StatelessWidget {
                 child: Column(
                   children: [
                     Buttons(
-                      onTap: () async {},
+                      onTap: () async {
+                        var res = await Permission.camera.request();
+                        if (res == PermissionStatus.denied ||
+                            res == PermissionStatus.permanentlyDenied ||
+                            res == PermissionStatus.restricted) {
+                          // negative case
+                        } else {
+                          // positive case
+                          // ignore: use_build_context_synchronously
+                          var resImage = await uploadImage(
+                              source: ImageSource.camera, context: context);
+                        }
+                      },
                       buttonText: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -79,7 +92,20 @@ class ImagePick extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Buttons(
-                      onTap: () async {},
+                      onTap: () async {
+                        var res = await Permission.mediaLibrary.request();
+                        if (res == PermissionStatus.denied ||
+                            res == PermissionStatus.permanentlyDenied ||
+                            res == PermissionStatus.restricted) {
+                          // negative case
+                        } else {
+                          // positive case
+                          // ignore: use_build_context_synchronously
+                          var resImage = await uploadImage(
+                              source: ImageSource.gallery, context: context);
+                          if (resImage != null) {}
+                        }
+                      },
                       buttonText: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

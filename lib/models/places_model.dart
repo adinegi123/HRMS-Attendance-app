@@ -8,13 +8,14 @@ class Place extends Equatable {
   final String uid;
   final String imageUrl;
   final String buildingCount;
-  final String floorCount;
+
   final String openingHours;
   final String closingHours;
   final double ratingsAboutPlace;
   final double placeSize;
+  final String totalNumberOfFloors;
 
-  Place({
+  const Place({
     required this.latitude,
     required this.longitude,
     required this.address,
@@ -23,11 +24,11 @@ class Place extends Equatable {
     required this.uid,
     required this.imageUrl,
     required this.buildingCount,
-    required this.floorCount,
     required this.openingHours,
     required this.closingHours,
     required this.ratingsAboutPlace,
     required this.placeSize,
+    required this.totalNumberOfFloors,
   });
 
   @override
@@ -40,11 +41,11 @@ class Place extends Equatable {
     uid,
     imageUrl,
     buildingCount,
-    floorCount,
     openingHours,
     closingHours,
     ratingsAboutPlace,
     placeSize,
+    totalNumberOfFloors,
   ];
 
   @override

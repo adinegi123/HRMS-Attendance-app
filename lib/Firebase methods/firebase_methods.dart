@@ -36,7 +36,7 @@ class FirebaseMethods {
     }
   }
 
-  Future<UserCredential?> signIn(
+  Future<UserCredential?> logIn(
       String email, String password, BuildContext context) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
@@ -129,14 +129,60 @@ class FirebaseMethods {
   }
 
   static Future<bool> createUser({
+    required String userName,
     required String? userUid,
-    required String? userName,
+    required String? userProfileUid,
+    required String? userAge,
+    required String? userAddress,
+    required String? userEmail,
+    required String? associatedCluster,
+    required String? profileImageURL,
+    required String? mobileNumber,
+    required String? countryCode,
+    required String? stateCode,
+    required String? latLong,
+    required String? localityCode,
+    required String? pinCode,
+    required String? password,
+    required String? ipAddress,
+    required String? empDesignation,
+    required String? appVersion,
+    required String? deviceType,
+    required String? loginTimeStamp,
+    required String? logoutTimeStamp,
+    required String? floorCount,
   }) async {
     try {
+      await FirebaseFirestore.instance.collection('users').doc(userUid).set({});
 
-      await FirebaseFirestore.instance.collection('users').doc(userUid).set({
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userUid)
+          .collection('myProfile')
+          .doc(userProfileUid)
+          .set({
         'userUid': userUid,
+        'userProfileUid': userProfileUid,
         'userName': userName,
+        'userAge': userAge,
+        'userAddress': userAddress,
+        'userEmail': userEmail,
+        'associatedCluster': associatedCluster,
+        'profileImageURL': profileImageURL,
+        'mobileNumber': mobileNumber,
+        'countryCode': countryCode,
+        'stateCode': stateCode,
+        'latLong': latLong,
+        'localityCode': localityCode,
+        'pinCode': pinCode,
+        'password': password,
+        'ipAddress': ipAddress,
+        'empDesignation': empDesignation,
+        'appVersion': appVersion,
+        'deviceType': deviceType?.toString(), // Convert enum to string if not null
+        'loginTimeStamp': loginTimeStamp,
+        'logoutTimeStamp': logoutTimeStamp,
+        'floorCount': floorCount,
         'timestamp': FieldValue.serverTimestamp(),
       });
 
@@ -147,3 +193,5 @@ class FirebaseMethods {
     }
   }
 }
+
+

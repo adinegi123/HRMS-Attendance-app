@@ -6,13 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
 
   // This widget is the root of your application.
   static PasswordVisibilityProvider passwordVisibility =
       PasswordVisibilityProvider();
   static BottomNavBarProvider bottomNavBar = BottomNavBarProvider();
   static ImagePickerProvider imageProvider = ImagePickerProvider();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
+  GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Attendance App',
         debugShowCheckedModeBanner: false,
+        scaffoldMessengerKey: _scaffoldMessengerKey,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
