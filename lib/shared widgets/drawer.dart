@@ -1,3 +1,4 @@
+import 'package:attendance_app/components/custom_popup.dart';
 import 'package:attendance_app/routes/route_const.dart';
 import 'package:flutter/material.dart';
 
@@ -58,8 +59,9 @@ class Drawers extends StatelessWidget {
             title: const Text('Log Out'),
             leading: const Icon(Icons.logout),
             onTap: () {
-              Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
+              CustomPopup.showLogoutPopup(context: context);
+              //Navigator.pop(context);
+             // Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
             },
           ),
         ],
