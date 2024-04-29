@@ -7,9 +7,10 @@ import 'package:attendance_app/shared%20widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class Home extends StatefulWidget {
-  const Home({super.key,});
+  const Home({
+    super.key,
+  });
 
   @override
   State<Home> createState() => _HomeState();
@@ -21,7 +22,7 @@ class _HomeState extends State<Home> {
     return Consumer<BottomNavBarProvider>(
       builder: (context, bottomNavBarProvider, _) {
         final List<Widget> pages = [
-           const DashBoard(),
+          const DashBoard(),
           const CalendarPage(),
           const ProfilePage(),
         ];
@@ -30,6 +31,7 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.deepPurple.shade100,
           appBar: const SecondaryAppBar(
             screenName: 'Attendance',
+            leading: Icon(Icons.menu),
           ),
           body: pages[bottomNavBarProvider.selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
@@ -59,4 +61,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-

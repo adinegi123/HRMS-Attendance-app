@@ -227,7 +227,7 @@ class _SignUpState extends State<SignUp> {
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Failed to Siign Up'),
+                                content: Text('Failed to Sign Up'),
                                 duration: Duration(seconds: 2),
                               ),
                             );
