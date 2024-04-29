@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 20,
             ),
-            const MyTextWidget(text: "Name"),
+            const MyTextWidget(text: "Emp Name"),
             MyTextField(hintText: "Employee Name", controller: employeeName),
             const MyTextWidget(text: "Employee Id"),
             MyTextField(hintText: "Employee Id", controller: employeeId),
