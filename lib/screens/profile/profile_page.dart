@@ -24,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController DOB = TextEditingController();
   final TextEditingController designation = TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  late File? image;
+  late File?  image;
 
   @override
   void dispose() {
