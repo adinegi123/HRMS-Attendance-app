@@ -2,9 +2,14 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:attendance_app/Firebase%20methods/firebase_methods.dart';
+import 'package:attendance_app/providers/location_service_provider.dart';
 import 'package:attendance_app/routes/route_const.dart';
 import 'package:attendance_app/screens/login/login.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:location/location.dart' as loc;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,20 +23,50 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    checkLoginStatusAndNavigate();
+    // checkLoginStatusAndNavigate();
+    initApp();
     super.initState();
-
-    // _timer = Timer(const Duration(seconds: 5), () {
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => Login(
-    //         formKey: GlobalKey<FormState>(),
-    //       ),
-    //     ),
-    //   );
-    // });
   }
+
+  Future<void> initApp() async {
+    await requestLocationPermission();
+    await fetchUserInfoAndNavigate();
+  }
+
+  Future<void> requestLocationPermission() async {
+    loc.Location location = loc.Location();
+    bool serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        Fluttertoast.showToast(msg: 'Location service not enabled.');
+        return;
+      }
+    }
+    loc.PermissionStatus permission = await location.hasPermission();
+    if (permission == loc.PermissionStatus.denied ||
+        permission == loc.PermissionStatus.deniedForever) {
+      permission = await location.requestPermission();
+      if (permission != loc.PermissionStatus.granted) {
+        Fluttertoast.showToast(msg: 'Location permission not granted.');
+        return;
+      }
+    }
+  }
+
+  Future<void> fetchUserInfoAndNavigate() async {
+    LocationServiceProvider locationServiceProvider = Provider.of<
+        LocationServiceProvider>(context, listen: false);
+    await locationServiceProvider
+        .fetchData(); // Fetch user info including location
+    bool isLoggedIn = await FirebaseMethods.isUserSignedIn();
+    if (isLoggedIn) {
+      Navigator.pushReplacementNamed(context, Routes.homePageRoute);
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
+    }
+  }
+
 
   Future<void> checkLoginStatusAndNavigate() async {
     bool isLoggedIn = await FirebaseMethods.isUserSignedIn();
@@ -47,7 +82,6 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

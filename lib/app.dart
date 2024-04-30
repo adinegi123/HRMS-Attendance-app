@@ -1,5 +1,6 @@
 import 'package:attendance_app/providers/bottom_navbar_provider.dart';
 import 'package:attendance_app/providers/image_provider.dart';
+import 'package:attendance_app/providers/location_service_provider.dart';
 import 'package:attendance_app/providers/password_visibility_provider.dart';
 import 'package:attendance_app/routes/route_generator.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
       PasswordVisibilityProvider();
   static BottomNavBarProvider bottomNavBar = BottomNavBarProvider();
   static ImagePickerProvider imageProvider = ImagePickerProvider();
+  static LocationServiceProvider locationServiceProvider = LocationServiceProvider();
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
   GlobalKey<ScaffoldMessengerState>();
 
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: passwordVisibility),
         ChangeNotifierProvider.value(value: bottomNavBar),
         ChangeNotifierProvider.value(value: imageProvider),
+        ChangeNotifierProvider.value(value: locationServiceProvider),
       ],
       child: MaterialApp(
         title: 'Attendance App',

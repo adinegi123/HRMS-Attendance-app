@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:attendance_app/components/custom_popup.dart';
 import 'package:attendance_app/providers/image_provider.dart';
+import 'package:attendance_app/shared/image_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../class/constant.dart';
@@ -9,7 +10,6 @@ import '../../components/custom_text_widget.dart';
 import '../../components/my_textfields.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../shared widgets/image_bottom_sheet.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

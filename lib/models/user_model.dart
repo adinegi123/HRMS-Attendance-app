@@ -24,6 +24,7 @@ class User extends Equatable {
   final String loginTimeStamp;
   final String logoutTimeStamp;
   final String floorCount;
+  final DateTime? updatedAt;
 
   const User({
     required this.uId,
@@ -46,6 +47,7 @@ class User extends Equatable {
     required this.loginTimeStamp,
     required this.logoutTimeStamp,
     required this.floorCount,
+     this.updatedAt
   });
 
   @override
@@ -70,5 +72,6 @@ class User extends Equatable {
     loginTimeStamp,
     logoutTimeStamp,
     floorCount,
+    updatedAt
   ];
 }
