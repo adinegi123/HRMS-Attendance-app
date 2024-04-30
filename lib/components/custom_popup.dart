@@ -1,5 +1,7 @@
 import 'package:attendance_app/components/progress_indicator.dart';
+import 'package:attendance_app/shared%20widgets/date_picker.dart';
 import 'package:attendance_app/shared%20widgets/logout_popup.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../shared widgets/exit_popup.dart';
@@ -48,5 +50,11 @@ class CustomPopup {
 
   static dismissProgressIndicator() {
     Navigator.of(_dialogContext).pop();
+  }
+  static showDatePicker({required BuildContext context, required TextEditingController DOB}) {
+    return showDialog(
+      context: context,
+      builder: (context) => DatePicker(dobController: DOB,),
+    );
   }
 }
