@@ -10,7 +10,6 @@ import '../../components/custom_text_widget.dart';
 import '../../components/my_textfields.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
