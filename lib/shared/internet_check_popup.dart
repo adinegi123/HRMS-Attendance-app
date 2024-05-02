@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:attendance_app/components/buttons.dart';
 import 'package:attendance_app/components/responsive_progress_indicator.dart';
 import 'package:attendance_app/components/secondary_custom_button.dart';
 import 'package:attendance_app/providers/essential_service_provider.dart';

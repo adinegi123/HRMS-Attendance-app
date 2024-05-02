@@ -53,12 +53,12 @@ class RouteGenerator {
       case Routes.profilePageRoute:
         return navigateToScreen(
           settings: settings,
-          route: ProfilePage(),
+          route: const ProfilePage(),
         );
       case Routes.calenderPageRoute:
         return navigateToScreen(
           settings: settings,
-          route: CalendarPage(),
+          route: const CalendarPage(),
         );
 
       default:

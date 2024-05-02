@@ -4,13 +4,13 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
-import 'package:location/location.dart';
+// import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:http/http.dart' as http;
 
 class LocationServiceProvider with ChangeNotifier {
-  Location location = Location();
+  // Location location = Location();
   Geolocator geolocator = Geolocator();
 
   String? ipAddress;
@@ -23,24 +23,24 @@ class LocationServiceProvider with ChangeNotifier {
   String? longitude;
 
   Future<void> fetchData() async {
-    await getLocationData();
+    // await getLocationData();
     await fetchDeviceInfo();
     await _getIpAddress();
     notifyListeners();
   }
 
-  Future<void> getLocationData() async {
-    try {
-      LocationData locationData = await location.getLocation();
-      // Access latitude and longitude using locationData.latitude and locationData.longitude
-       latitude = locationData.latitude!.toString();
-       longitude = locationData.longitude!.toString();
-      log('Latitude: $latitude, Longitude: $longitude');
-      notifyListeners();
-    } catch (e) {
-      log('Error getting location data: $e');
-    }
-  }
+  // Future<void> getLocationData() async {
+  //   try {
+  //     LocationData locationData = await location.getLocation();
+  //     // Access latitude and longitude using locationData.latitude and locationData.longitude
+  //      latitude = locationData.latitude!.toString();
+  //      longitude = locationData.longitude!.toString();
+  //     log('Latitude: $latitude, Longitude: $longitude');
+  //     notifyListeners();
+  //   } catch (e) {
+  //     log('Error getting location data: $e');
+  //   }
+  // }
 
 
   Future<void> fetchDeviceInfo() async {
