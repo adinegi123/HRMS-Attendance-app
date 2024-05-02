@@ -29,9 +29,16 @@ class _HomeState extends State<Home> {
 
         return Scaffold(
           backgroundColor: Colors.deepPurple.shade100,
-          appBar: const SecondaryAppBar(
+          appBar: SecondaryAppBar(
             screenName: 'Attendance',
-            leading: Icon(Icons.menu),
+            leading: Builder(
+              builder: (context) => IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+            ),
           ),
           body: pages[bottomNavBarProvider.selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
