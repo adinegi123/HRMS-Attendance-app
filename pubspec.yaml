@@ -50,6 +50,13 @@ dependencies:
   image_cropper: ^5.0.1
   permission_handler: ^11.3.1
   random_string_generator: ^2.0.0
+  cached_network_image: ^3.3.1
+  device_info_plus: ^10.1.0
+  lottie: ^3.1.0
+  flutter_network_connectivity: ^0.0.6
+  geolocator: ^11.0.0
+  http: ^1.2.1
+  fluttertoast: ^8.2.5
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +83,7 @@ flutter:
 
   assets:
      - assets/images/
+     - assets/animations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

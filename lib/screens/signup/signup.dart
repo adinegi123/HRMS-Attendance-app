@@ -6,6 +6,7 @@ import 'package:attendance_app/class/form%20validation.dart';
 import 'package:attendance_app/class/utils.dart';
 import 'package:attendance_app/components/buttons.dart';
 import 'package:attendance_app/components/my_textfields.dart';
+import 'package:attendance_app/providers/location_service_provider.dart';
 import 'package:attendance_app/providers/password_visibility_provider.dart';
 import 'package:attendance_app/routes/route_const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -167,6 +168,8 @@ class _SignUpState extends State<SignUp> {
                       onTap: () async {
                         if (widget._formKey.currentState!.validate()) {
                           CustomPopup.showProgressIndicator(context: context);
+                          LocationServiceProvider locationServiceProvider = Provider.of<LocationServiceProvider>(context, listen: false);
+                          await locationServiceProvider.fetchData();
                           UserCredential? userCredential = await FirebaseMethods.signUp(
                               email: _emailController.text,
                               password: _passwordController.text,
@@ -183,26 +186,26 @@ class _SignUpState extends State<SignUp> {
                             var res = await FirebaseMethods.createUser(
                               userUid: userUid,
                               userProfileUid: userProfileUid,
-                              userName: 'aditi',
-                              userAge: '25',
-                              userAddress: 'xyz',
+                              userName: '',
+                              userAge: '',
+                              userAddress: '',
                               userEmail: _emailController.text,
                               associatedCluster: 'ABC',
                               profileImageURL: '',
-                              mobileNumber: '9456315624',
+                              mobileNumber: '',
                               countryCode: '+91',
                               stateCode: '',
-                              latLong: '28.5849° N, 77.3791° E',
-                              localityCode: '200',
-                              pinCode: '201309',
+                              latLong: '${locationServiceProvider.latitude},${locationServiceProvider.longitude}',
+                              localityCode: '',
+                              pinCode: '',
                               password: _passwordController.text,
-                              ipAddress: '192.168.0.1',
+                              ipAddress: locationServiceProvider.ipAddress,
                               empDesignation: 'flutter developer',
-                              appVersion: '1.0',
-                              deviceType: 'Android',
+                              appVersion: '',
+                              deviceType: locationServiceProvider.deviceName,
                               // Assuming _deviceType is an enum value
-                              loginTimeStamp: '10:00 am',
-                              logoutTimeStamp: '7:00 pm',
+                              loginTimeStamp: '',
+                              logoutTimeStamp: '',
                               floorCount: '2',
                             );
                             log("response $res");
@@ -227,7 +230,7 @@ class _SignUpState extends State<SignUp> {
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Failed to Siign Up'),
+                                content: Text('Failed to Sign Up'),
                                 duration: Duration(seconds: 2),
                               ),
                             );
