@@ -6,6 +6,7 @@ class LogoutPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
       title: const Text('Confirm Logout'),
       content: const Text('Are you sure you want to log out?'),
