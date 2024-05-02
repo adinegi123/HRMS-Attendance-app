@@ -8,11 +8,6 @@ import 'package:provider/provider.dart';
 import '../../components/custom_text_widget.dart';
 import '../../components/my_textfields.dart';
 
-
-
-
-
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
