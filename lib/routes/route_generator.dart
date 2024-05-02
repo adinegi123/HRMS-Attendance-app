@@ -5,7 +5,7 @@ import 'package:attendance_app/screens/login/login.dart';
 import 'package:attendance_app/screens/profile/profile_page.dart';
 import 'package:attendance_app/screens/signup/signup.dart';
 import 'package:attendance_app/screens/splash/splash.dart';
-import 'package:attendance_app/shared%20widgets/fade_route_transition.dart';
+import 'package:attendance_app/shared/fade_route_transition.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:developer';
 import 'dart:io';
@@ -53,12 +53,12 @@ class RouteGenerator {
       case Routes.profilePageRoute:
         return navigateToScreen(
           settings: settings,
-          route: ProfilePage(),
+          route: const ProfilePage(),
         );
       case Routes.calenderPageRoute:
         return navigateToScreen(
           settings: settings,
-          route: CalendarPage(),
+          route: const CalendarPage(),
         );
 
       default:

@@ -4,8 +4,9 @@ import 'package:equatable/equatable.dart';
 enum DeviceType { android, ios, other }
 
 class User extends Equatable {
-  final int id;
+  final int uId;
   final String name;
+  final String age;
   final String associatedCluster;
   final String profileImageURL;
   final String mobileNumber;
@@ -23,10 +24,12 @@ class User extends Equatable {
   final String loginTimeStamp;
   final String logoutTimeStamp;
   final String floorCount;
+  final DateTime? updatedAt;
 
   const User({
-    required this.id,
+    required this.uId,
     required this.name,
+    required this.age,
     required this.associatedCluster,
     required this.profileImageURL,
     required this.mobileNumber,
@@ -44,12 +47,14 @@ class User extends Equatable {
     required this.loginTimeStamp,
     required this.logoutTimeStamp,
     required this.floorCount,
+     this.updatedAt
   });
 
   @override
   List<Object?> get props => [
-    id,
+    uId,
     name,
+    age,
     associatedCluster,
     profileImageURL,
     mobileNumber,
@@ -67,5 +72,6 @@ class User extends Equatable {
     loginTimeStamp,
     logoutTimeStamp,
     floorCount,
+    updatedAt
   ];
 }
