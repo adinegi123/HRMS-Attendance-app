@@ -4,7 +4,7 @@ import 'package:attendance_app/shared%20widgets/logout_popup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../shared widgets/exit_popup.dart';
+
 import '../shared widgets/image_picker.dart';
 
 class CustomPopup {
