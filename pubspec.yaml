@@ -57,6 +57,7 @@ dependencies:
   geolocator: ^11.0.0
   http: ^1.2.1
   fluttertoast: ^8.2.5
+  flutter_inappwebview: ^6.0.0
 
 dev_dependencies:
   flutter_test:

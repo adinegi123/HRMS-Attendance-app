@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
+
 // import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -23,25 +24,26 @@ class LocationServiceProvider with ChangeNotifier {
   String? longitude;
 
   Future<void> fetchData() async {
-    // await getLocationData();
+    await getLocationData();
     await fetchDeviceInfo();
     await _getIpAddress();
     notifyListeners();
   }
 
-  // Future<void> getLocationData() async {
-  //   try {
-  //     LocationData locationData = await location.getLocation();
-  //     // Access latitude and longitude using locationData.latitude and locationData.longitude
-  //      latitude = locationData.latitude!.toString();
-  //      longitude = locationData.longitude!.toString();
-  //     log('Latitude: $latitude, Longitude: $longitude');
-  //     notifyListeners();
-  //   } catch (e) {
-  //     log('Error getting location data: $e');
-  //   }
-  // }
-
+  Future<void> getLocationData() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best,
+      );
+      // Access latitude and longitude using locationData.latitude and locationData.longitude
+      latitude = position.latitude.toString();
+      longitude = position.longitude.toString();
+      log('Latitude: $latitude, Longitude: $longitude');
+      notifyListeners();
+    } catch (e) {
+      log('Error getting location data: $e');
+    }
+  }
 
   Future<void> fetchDeviceInfo() async {
     try {
@@ -51,17 +53,23 @@ class LocationServiceProvider with ChangeNotifier {
         ipAddress = await _getIpAddress();
         operatingSystem = 'Android';
         deviceId = androidInfo.id ?? 'N/A'; // Use 'N/A' if androidId is null
-        deviceName = androidInfo.model ?? 'Unknown'; // Use 'Unknown' if model is null
-        osVersion = androidInfo.version.release ?? 'Unknown'; // Use 'Unknown' if release version is null
-        deviceModel = androidInfo.product ?? 'Unknown'; // Use 'Unknown' if product is null
+        deviceName =
+            androidInfo.model ?? 'Unknown'; // Use 'Unknown' if model is null
+        osVersion = androidInfo.version.release ??
+            'Unknown'; // Use 'Unknown' if release version is null
+        deviceModel = androidInfo.product ??
+            'Unknown'; // Use 'Unknown' if product is null
       } else if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
         ipAddress = await _getIpAddress();
         operatingSystem = 'iOS';
-        deviceId = iosInfo.identifierForVendor ?? 'N/A'; // Use 'N/A' if identifierForVendor is null
+        deviceId = iosInfo.identifierForVendor ??
+            'N/A'; // Use 'N/A' if identifierForVendor is null
         deviceName = iosInfo.name ?? 'Unknown'; // Use 'Unknown' if name is null
-        osVersion = iosInfo.systemVersion ?? 'Unknown'; // Use 'Unknown' if systemVersion is null
-        deviceModel = iosInfo.model ?? 'Unknown'; // Use 'Unknown' if model is null
+        osVersion = iosInfo.systemVersion ??
+            'Unknown'; // Use 'Unknown' if systemVersion is null
+        deviceModel =
+            iosInfo.model ?? 'Unknown'; // Use 'Unknown' if model is null
       }
       notifyListeners();
     } catch (e) {

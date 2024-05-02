@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class FirebaseMethods {
   static final FirebaseAuth auth = FirebaseAuth.instance;
@@ -128,6 +131,59 @@ class FirebaseMethods {
     }
   }
 
+  static Future<void> sendErrorLog(
+      {required Object error, required StackTrace stackTrace}) async {
+    await FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    try {
+      // Get the current user ID from Firebase Authentication
+      String? userId = await getUserId();
+
+      // Record the error in Firebase Crashlytics
+      await FirebaseCrashlytics.instance.recordError(error, stackTrace);
+
+      // Send the error log to your API
+      var res = await http.post(
+        Uri.parse('your_api_endpoint_here'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'stackTrace': stackTrace.toString(),
+          'errorCode': error.toString(),
+          'userId': userId ?? 'Unknown',
+        }),
+      );
+
+      if (res.statusCode == 200) {
+        log('Log Sent');
+      } else {
+        log('Log Not Sent');
+      }
+    } catch (e) {
+      log('Error sending error log: $e');
+    }
+  }
+
+  static Future<String?> getUserId() async {
+    try {
+      // Get the current user from Firebase Authentication
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Check if the user is signed in
+      if (user != null) {
+        // User is signed in, return the user's UID (user ID)
+        return user.uid;
+      } else {
+        // User is not signed in, return null or handle accordingly
+        return null;
+      }
+    } catch (e) {
+      // Handle any errors that occur during the process
+      log('Error retrieving user ID: $e');
+      return null;
+    }
+  }
+
   static Future<bool> createUser({
     required String userName,
     required String? userUid,
@@ -179,7 +235,8 @@ class FirebaseMethods {
         'ipAddress': ipAddress,
         'empDesignation': empDesignation,
         'appVersion': appVersion,
-        'deviceType': deviceType?.toString(), // Convert enum to string if not null
+        'deviceType': deviceType?.toString(),
+        // Convert enum to string if not null
         'loginTimeStamp': loginTimeStamp,
         'logoutTimeStamp': logoutTimeStamp,
         'floorCount': floorCount,
@@ -193,5 +250,3 @@ class FirebaseMethods {
     }
   }
 }
-
-
