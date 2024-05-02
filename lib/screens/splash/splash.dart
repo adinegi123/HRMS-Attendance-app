@@ -2,13 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:attendance_app/Firebase%20methods/firebase_methods.dart';
-import 'package:attendance_app/Local%20Database/local_database.dart';
-import 'package:attendance_app/providers/location_service_provider.dart';
 import 'package:attendance_app/routes/route_const.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:location/location.dart' as loc;
-import 'package:provider/provider.dart';
+import 'package:location/location.dart';
+
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,56 +16,57 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // late Timer _timer;
+ final Location location = Location();
+
 
   @override
   void initState()  {
+    getLocation(location: location).then((locationData) {
+      if (locationData != null) {
+        log("latitude-->${locationData.latitude}");
+        log("longitude-->${locationData.longitude}");
+      } else {
+        // Handle case when location data is null
+        log("Location data is null");
+      }
+      checkLoginStatusAndNavigate();
+    });
     checkLoginStatusAndNavigate();
     super.initState();
-    // checkLoginStatusAndNavigate();
-    // initApp();
 
   }
 
-  // Future<void> initApp() async {
-  //   await requestLocationPermission();
-  //   await fetchUserInfoAndNavigate();
-  // }
-  //
-  // Future<void> requestLocationPermission() async {
-  //   loc.Location location = loc.Location();
-  //   bool serviceEnabled = await location.serviceEnabled();
-  //   if (!serviceEnabled) {
-  //     serviceEnabled = await location.requestService();
-  //     if (!serviceEnabled) {
-  //       Fluttertoast.showToast(msg: 'Location service not enabled.');
-  //       return;
-  //     }
-  //   }
-  //   loc.PermissionStatus permission = await location.hasPermission();
-  //   if (permission == loc.PermissionStatus.denied ||
-  //       permission == loc.PermissionStatus.deniedForever) {
-  //     permission = await location.requestPermission();
-  //     if (permission != loc.PermissionStatus.granted) {
-  //       Fluttertoast.showToast(msg: 'Location permission not granted.');
-  //       return;
-  //     }
-  //   }
-  // }
-  //
-  // Future<void> fetchUserInfoAndNavigate() async {
-  //   LocationServiceProvider locationServiceProvider =
-  //       Provider.of<LocationServiceProvider>(context, listen: false);
-  //   await locationServiceProvider
-  //       .fetchData(); // Fetch user info including location
-  //   bool isLoggedIn = await FirebaseMethods.isUserSignedIn();
-  //   if (isLoggedIn) {
-  //     Navigator.pushReplacementNamed(context, Routes.homePageRoute);
-  //   } else {
-  //     Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
-  //   }
-  // }
-  //
+  Future<LocationData?> getLocation({required Location location}) async {
+    var serviceEnabled = await location.serviceEnabled();
+    log('serviceEnabled $serviceEnabled');
+    if (!serviceEnabled) {
+      var serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return null;
+      }
+    }
+    var permissionRes = await location.hasPermission();
+    log('permissionRes $permissionRes');
+    if (permissionRes == PermissionStatus.denied ||
+        permissionRes == PermissionStatus.deniedForever) {
+      var permissionRes = await location.requestPermission();
+      if (permissionRes != PermissionStatus.granted) {
+        return null;
+      }
+    }
+
+    log('Get Location');
+
+    //Success Case
+    try {
+      var locationData = await location.getLocation();
+      log('locationData $locationData');
+      return locationData;
+    } catch (e) {
+      log('This is location error $e');
+      return null;
+    }
+  }
   Future<void> checkLoginStatusAndNavigate() async {
     bool isLoggedIn = await FirebaseMethods.isUserSignedIn();
     // bool isLoggedIn = await LocalDb.isLogin();

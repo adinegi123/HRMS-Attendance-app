@@ -20,8 +20,7 @@ class MyApp extends StatelessWidget {
 
   static DateProvider dateProvider = DateProvider();
 
-  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
-  GlobalKey<ScaffoldMessengerState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
