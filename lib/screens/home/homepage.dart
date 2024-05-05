@@ -3,7 +3,7 @@ import 'package:attendance_app/providers/bottom_navbar_provider.dart';
 import 'package:attendance_app/screens/calender_page/calender_page.dart';
 import 'package:attendance_app/screens/dashboard/dashboard_view.dart';
 import 'package:attendance_app/screens/profile/profile_page.dart';
-import 'package:attendance_app/shared/drawer.dart';
+import 'package:attendance_app/components/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

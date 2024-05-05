@@ -28,6 +28,5 @@ Future<void> main() async {
         (value) =>
             log('Error: ${error.toString()}', error: error, stackTrace: stack));
     //Firebase
-    await FirebaseCrashlytics.instance.recordError(error, stack);
   });
 }

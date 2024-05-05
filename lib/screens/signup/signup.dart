@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:attendance_app/Firebase%20methods/firebase_methods.dart';
 import 'package:attendance_app/Local%20Database/local_database.dart';
+import 'package:attendance_app/class/constant.dart';
 import 'package:attendance_app/class/form%20validation.dart';
 import 'package:attendance_app/class/utils.dart';
 import 'package:attendance_app/components/buttons.dart';
@@ -33,12 +34,22 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPwController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _designationController = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPwController.dispose();
+    _nameController.dispose();
+    _ageController.dispose();
+    _addressController.dispose();
+    _mobileController.dispose();
+    _designationController.dispose();
     super.dispose();
   }
 
@@ -46,44 +57,93 @@ class _SignUpState extends State<SignUp> {
     _emailController.clear();
     _passwordController.clear();
     _confirmPwController.clear();
+    _nameController.clear();
+    _ageController.clear();
+    _addressController.clear();
+    _mobileController.clear();
+    _designationController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey.shade300,
         body: SafeArea(
-          child: Form(
-            key: widget._formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Sign Up",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+      child: Form(
+        key: widget._formKey,
+        child: Scrollbar(
+          thickness: 4,
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                  collapsedHeight: MediaQuery.of(context).size.height * 0.25,
+                  backgroundColor: Colors.deepPurple,
+                  leading: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_outlined,
+                      color: Colors.white,
                     ),
-                    const SizedBox(
-                      height: 10,
+                  ),
+                  pinned: true,
+                  toolbarHeight: MediaQuery.of(context).size.height * 0.25,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(45),
+                    bottomRight: Radius.circular(45),
+                  )),
+                  bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(10.0),
+                    child: Container(
+                      height: 166,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: deepPurpleColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(45),
+                          bottomRight: Radius.circular(45),
+                        ),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.only(top: 30, left: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Create an Account",
+                              style: TextStyle(
+                                  fontSize: 26,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Please fill details below",
+                              style: TextStyle(color: Color(0xFFBDBDBD)),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    const Text(
-                      "Create Your Account",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                      child: MyTextField(
+                  )),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      MyTextField(
                           hintText: "Email",
                           keyboardType: TextInputType.emailAddress,
                           prefixIcon: const Icon(Icons.email),
                           validator: (s) {
                             if (s == null || s.isEmpty) {
-                              return null;
+                              return FormValidationFunction.checkIfEmpty(s);
                             }
                             if (!Utils.isEmail(s)) {
                               return 'Please enter valid Email id';
@@ -91,22 +151,33 @@ class _SignUpState extends State<SignUp> {
                             return null;
                           },
                           controller: _emailController),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    // password provider
-                    Consumer<PasswordVisibilityProvider>(
-                        builder: (context, value, child) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 28.0),
-                            child: MyTextField(
+                      MyTextField(
+                        hintText: "Name",
+                        keyboardType: TextInputType.name,
+                        prefixIcon: const Icon(Icons.person),
+                        controller: _nameController,
+                        validator: (s) {
+                          return FormValidationFunction.checkIfEmpty(s);
+                        },
+                      ),
+                      MyTextField(
+                        hintText: "Mobile",
+                        keyboardType: TextInputType.number,
+                        prefixIcon: const Icon(Icons.phone),
+                        controller: _mobileController,
+                        validator: (s) {
+                          return FormValidationFunction.checkPhoneNumber(s);
+                        },
+                      ),
+                      Consumer<PasswordVisibilityProvider>(
+                          builder: (context, value, child) {
+                        return Column(
+                          children: [
+                            MyTextField(
                               hintText: "Password",
-                              prefixIcon: const Icon(Icons.lock),
+                              prefixIcon: const Icon(
+                                Icons.lock,
+                              ),
                               controller: _passwordController,
                               obscureText: !value.passwordVisibility,
                               validator: (s) {
@@ -121,19 +192,15 @@ class _SignUpState extends State<SignUp> {
                                         value.confirmPasswordVisibility,
                                   );
                                 },
-                                child: Icon(value.passwordVisibility
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
+                                child: Icon(
+                                  value.passwordVisibility
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: deepPurpleColor,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 28.0),
-                            child: MyTextField(
+                            MyTextField(
                                 hintText: "Confirm Password",
                                 prefixIcon: const Icon(Icons.lock),
                                 obscureText: !value.confirmPasswordVisibility,
@@ -152,117 +219,154 @@ class _SignUpState extends State<SignUp> {
                                           !value.confirmPasswordVisibility,
                                     );
                                   },
-                                  child: Icon(value.confirmPasswordVisibility
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
+                                  child: Icon(
+                                    value.confirmPasswordVisibility
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: deepPurpleColor,
+                                  ),
                                 ),
-                                controller: _confirmPwController),
-                          )
-                        ],
-                      );
-                    }),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    Buttons(
-                      onTap: () async {
-                        if (widget._formKey.currentState!.validate()) {
-                          CustomPopup.showProgressIndicator(context: context);
-                          LocationServiceProvider locationServiceProvider = Provider.of<LocationServiceProvider>(context, listen: false);
-                          await locationServiceProvider.fetchData();
-                          UserCredential? userCredential = await FirebaseMethods.signUp(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                              context: context
-                          );
-                          if (userCredential != null) {
-                            log("userCredential$userCredential");
-                            var userUid = userCredential.user?.uid;
-                            log("userUid-->$userUid");
-                            await LocalDb.setUserUID(userUid!);
-                            var generator = RandomStringGenerator(fixedLength: 10);
-                            var userProfileUid =generator.generate();
-                            await LocalDb.setUserProfileUid(userProfileUid);
-                            var res = await FirebaseMethods.createUser(
-                              userUid: userUid,
-                              userProfileUid: userProfileUid,
-                              userName: '',
-                              userAge: '',
-                              userAddress: '',
-                              userEmail: _emailController.text,
-                              associatedCluster: 'ABC',
-                              profileImageURL: '',
-                              mobileNumber: '',
-                              countryCode: '+91',
-                              stateCode: '',
-                              latLong: '${locationServiceProvider.latitude},${locationServiceProvider.longitude}',
-                              localityCode: '',
-                              pinCode: '',
-                              password: _passwordController.text,
-                              ipAddress: locationServiceProvider.ipAddress,
-                              empDesignation: 'flutter developer',
-                              appVersion: '',
-                              deviceType: locationServiceProvider.deviceName,
-                              // Assuming _deviceType is an enum value
-                              loginTimeStamp: '',
-                              logoutTimeStamp: '',
-                              floorCount: '2',
-                            );
-                            log("response $res");
-                            if (res == true) {
-                              CustomPopup.dismissProgressIndicator();
-                              Navigator.pushNamedAndRemoveUntil(context, Routes.homePageRoute, (route) => false);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Signed Up successfully!'),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Something went wrong'),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
+                                controller: _confirmPwController)
+                          ],
+                        );
+                      }),
+                      MyTextField(
+                        hintText: "Age",
+                        keyboardType: TextInputType.number,
+                        prefixIcon: const Icon(Icons.person_sharp),
+                        controller: _ageController,
+                        validator: (s) {
+                          return FormValidationFunction.checkAgeField(s);
+                        },
+                      ),
+                      MyTextField(
+                        hintText: "Address",
+                        prefixIcon: const Icon(Icons.location_on_outlined),
+                        controller: _addressController,
+                        validator: (s) {
+                          return FormValidationFunction.checkIfEmpty(s);
+                        },
+                      ),
+                      MyTextField(
+                        hintText: "Designation",
+                        prefixIcon: const Icon(Icons.account_circle),
+                        controller: _designationController,
+                        validator: (s) {
+                          return FormValidationFunction.checkIfEmpty(s);
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0, bottom: 20),
+                        child: Buttons(
+                          onTap: () async {
+                            if (widget._formKey.currentState!.validate()) {
+                              CustomPopup.showProgressIndicator(
+                                  context: context);
+                              LocationServiceProvider locationServiceProvider =
+                                  Provider.of<LocationServiceProvider>(context,
+                                      listen: false);
+                              await locationServiceProvider.fetchData();
+                              UserCredential? userCredential =
+                                  await FirebaseMethods.signUp(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                      context: context);
+                              if (userCredential != null) {
+                                log("userCredential$userCredential");
+                                var userUid = userCredential.user?.uid;
+                                log("userUid-->$userUid");
+                                await LocalDb.setUserUID(userUid!);
+                                var generator =
+                                    RandomStringGenerator(fixedLength: 10);
+                                var userProfileUid = generator.generate();
+                                await LocalDb.setUserProfileUid(userProfileUid);
+                                var res = await FirebaseMethods.createUser(
+                                  userUid: userUid,
+                                  userProfileUid: userProfileUid,
+                                  userName: _nameController.text,
+                                  userAge: _ageController.text,
+                                  userAddress: _addressController.text,
+                                  userEmail: _emailController.text,
+                                  associatedCluster: 'ABC',
+                                  profileImageURL: '',
+                                  mobileNumber: _mobileController.text,
+                                  countryCode: '+91',
+                                  stateCode: '',
+                                  latLong:
+                                      '${locationServiceProvider.latitude},${locationServiceProvider.longitude}',
+                                  localityCode: '',
+                                  pinCode: '',
+                                  password: _passwordController.text,
+                                  ipAddress: locationServiceProvider.ipAddress,
+                                  empDesignation: _designationController.text,
+                                  appVersion: '',
+                                  deviceType:
+                                      locationServiceProvider.deviceName,
+                                  // Assuming _deviceType is an enum value
+                                  loginTimeStamp: '',
+                                  logoutTimeStamp: '',
+                                  floorCount: '2',
+                                );
+                                log("response $res");
+                                if (res == true) {
+                                  CustomPopup.dismissProgressIndicator();
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      Routes.homePageRoute, (route) => false);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Signed Up successfully!'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Something went wrong'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              } else {
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Failed to Sign Up'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                                clearControllers();
+                              }
                             }
-                          } else {
-                            Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Failed to Sign Up'),
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                            clearControllers();
-                          }
-                        }
-                      },
-                      buttonText: const Center(child: Text('Sign up')),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                          text: 'Already have account?',
-                          style: TextStyle(color: Colors.grey.shade700),
-                          children: [
-                            TextSpan(
-                              text: ' Login',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushNamed(
-                                      context, Routes.loginPageRoute);
-                                },
-                            )
-                          ]),
-                    ),
-                  ]),
-            ),
+                          },
+                          buttonText: const Center(child: Text('Sign up')),
+                        ),
+                      ),
+
+                      // RichText(
+                      //   text: TextSpan(
+                      //       text: 'Already have account?',
+                      //       style: TextStyle(color: Colors.grey.shade700),
+                      //       children: [
+                      //         TextSpan(
+                      //           text: ' Login',
+                      //           style:
+                      //           const TextStyle(fontWeight: FontWeight.bold),
+                      //           recognizer: TapGestureRecognizer()
+                      //             ..onTap = () {
+                      //               Navigator.pushNamed(
+                      //                   context, Routes.loginPageRoute);
+                      //             },
+                      //         )
+                      //       ]),
+                      // ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    ));
   }
 }

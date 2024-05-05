@@ -5,6 +5,7 @@ import 'package:attendance_app/providers/location_service_provider.dart';
 import 'package:attendance_app/providers/password_visibility_provider.dart';
 import 'package:attendance_app/routes/route_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
@@ -41,8 +42,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         scaffoldMessengerKey: _scaffoldMessengerKey,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          dividerColor: Colors.transparent,
+          datePickerTheme: const DatePickerThemeData(
+              backgroundColor: Colors.white, cancelButtonStyle: ButtonStyle()),
         ),
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.onGenerateRoute,

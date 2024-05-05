@@ -8,6 +8,7 @@ const Color hintColor = Color(0xffadadadff);
 const borderSide = Color(0xffb39ddbff);
 const toolbar = Color(0xffd1c4e9ff);
 const appPurpleColor = Color(0xff7E57C2);
+const deepPurpleColor = Colors.deepPurple;
 
 const AccentColor = Color(0xffF4C247);
 const DropdownHeight = 150.0;

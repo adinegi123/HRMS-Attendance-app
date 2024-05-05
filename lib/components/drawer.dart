@@ -29,30 +29,33 @@ class Drawers extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Image(
-                      image: AssetImage('assets/images/splash.png'),
-                      height: 80
-                    ),
+                        image: AssetImage('assets/images/splash.png'),
+                        height: 80),
                   )
                 ],
               ),
             ),
           ),
           ListTile(
-            title: const Text('Setting'),
+            title: const Text('Settings'),
             leading: const Icon(Icons.settings),
-            trailing: const Icon(Icons.arrow_forward_ios_rounded,size: 18,),
+            trailing: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 18,
+            ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
             },
           ),
           ListTile(
             title: const Text('About'),
             leading: const Icon(Icons.info),
-            trailing: const Icon(Icons.arrow_forward_ios_rounded,size: 18,),
+            trailing: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 18,
+            ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
             },
           ),
           ListTile(
@@ -61,7 +64,7 @@ class Drawers extends StatelessWidget {
             onTap: () {
               CustomPopup.showLogoutPopup(context: context);
               //Navigator.pop(context);
-             // Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
+              // Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
             },
           ),
         ],

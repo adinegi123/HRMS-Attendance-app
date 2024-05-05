@@ -2,14 +2,13 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:attendance_app/Firebase%20methods/firebase_methods.dart';
-import 'package:attendance_app/Local%20Database/local_database.dart';
+import 'package:attendance_app/class/constant.dart';
 import 'package:attendance_app/providers/location_service_provider.dart';
 import 'package:attendance_app/routes/route_const.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 
-// import 'package:location/location.dart' as loc;
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -117,18 +116,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple.shade100,
-      body: const Center(
+    return const Scaffold(
+      backgroundColor: deepPurpleColor,
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'HRMS Attendance',
               style: TextStyle(
-                  fontSize: 35.0,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic),
+                fontSize: 30.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(
               height: 30,

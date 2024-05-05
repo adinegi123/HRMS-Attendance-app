@@ -3,6 +3,12 @@ class Utils {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(email);
   }
+  static bool isPhoneNumber(String input) {
+    // Regular expression to validate phone numbers
+    final phoneRegex = RegExp(r'^(?:[+0]9)?[0-9]{10}$');
+    return phoneRegex.hasMatch(input);
+  }
+
   static List<DateTime> generateCalendarGrid(
       int currentMonth, int currentYear) {
     List<DateTime> gridDates = [];

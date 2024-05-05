@@ -20,6 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController employeeId = TextEditingController();
   final TextEditingController DOB = TextEditingController();
   final TextEditingController designation = TextEditingController();
+  final TextEditingController age = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   late File? image;
 
@@ -118,24 +119,41 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 20,
             ),
-            const MyTextWidget(text: "Name"),
-            MyTextField(hintText: "Employee Name", controller: employeeName),
-            const MyTextWidget(text: "Employee Id"),
-            MyTextField(hintText: "Employee Id", controller: employeeId),
-            const MyTextWidget(text: "Date Of Birth"),
-            MyTextField(hintText: "Enter Your DOB", controller: DOB,
-              suffixIcon: GestureDetector(
-                onTap: ()=> CustomPopup.showDatePicker(
-                  context: context, DOB: DOB),
-                child: Icon(Icons.calendar_month),
-              ),
+            // const MyTextWidget(text: "Name"),
+            MyTextField(
+              hintText: "Employee Name",
+              controller: employeeName,
+              readOnly: true,
             ),
-            const MyTextWidget(text: "Designation"),
+            // const MyTextWidget(text: "Employee Id"),
             MyTextField(
-                hintText: "Enter Your Designation", controller: designation),
-            const MyTextWidget(text: "Address"),
+              hintText: "Employee Id",
+              controller: employeeId,
+              readOnly: true,
+            ),
+            // const MyTextWidget(text: "Date Of Birth"),
             MyTextField(
-                hintText: "Enter Address", controller: addressController)
+              hintText: "Date of Birth", controller: DOB, readOnly: true,
+              suffixIcon: Icon(Icons.calendar_month), //To be implemented yet
+            ),
+
+            MyTextField(
+              hintText: "Your Age",
+              controller: age,
+              readOnly: true,
+            ),
+            // const MyTextWidget(text: "Designation"),
+            MyTextField(
+              hintText: " Your Designation",
+              controller: designation,
+              readOnly: true,
+            ),
+            // const MyTextWidget(text: "Address"),
+            MyTextField(
+              hintText: "Your Address",
+              controller: addressController,
+              readOnly: true,
+            )
           ],
         ),
       );

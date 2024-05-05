@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 
 class LocationServiceProvider with ChangeNotifier {
   // Location location = Location();
-  Geolocator geolocator = Geolocator();
 
   String? ipAddress;
   String? operatingSystem;

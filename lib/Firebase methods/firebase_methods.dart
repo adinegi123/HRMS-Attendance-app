@@ -19,6 +19,7 @@ class FirebaseMethods {
         email: email,
         password: password,
       );
+      log('user signed up');
       return userCredential;
     } on FirebaseAuthException catch (error) {
       String errorMessage = 'An error occurred';
@@ -114,6 +115,7 @@ class FirebaseMethods {
     final FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await auth.signOut();
+      log('user signed out');
       return true;
     } catch (error) {
       return false;
@@ -139,7 +141,7 @@ class FirebaseMethods {
       String? userId = await getUserId();
 
       // Record the error in Firebase Crashlytics
-      await FirebaseCrashlytics.instance.recordError(error, stackTrace);
+      // await FirebaseCrashlytics.instance.recordError(error, stackTrace);
 
       // Send the error log to your API
       var res = await http.post(
@@ -242,7 +244,7 @@ class FirebaseMethods {
         'floorCount': floorCount,
         'timestamp': FieldValue.serverTimestamp(),
       });
-
+      log('user collection created');
       return true;
     } catch (e) {
       log('Error creating user: $e');

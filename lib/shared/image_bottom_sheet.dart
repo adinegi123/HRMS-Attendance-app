@@ -37,7 +37,7 @@ void showImagePicker(BuildContext context) {
           padding: const EdgeInsets.all(20.0),
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4,
+            height: MediaQuery.of(context).size.height / 5,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,36 +45,34 @@ void showImagePicker(BuildContext context) {
                 const MyTextWidget(text: "Profile Photo"),
                 Row(
                   children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () async {
-                          var res = await Permission.camera.request();
-                          if (res == PermissionStatus.granted) {
-                            await uploadImage(
-                                source: ImageSource.gallery, context: context);
-                          } else {
-                            var resImage = await uploadImage(
-                                source: ImageSource.gallery, context: context);
-                          }
-                        },
-                        child: const SizedBox(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.white,
-                                child: Icon(
-                                  Icons.image,
-                                  size: 30,
-                                ),
+                    InkWell(
+                      onTap: () async {
+                        var res = await Permission.camera.request();
+                        if (res == PermissionStatus.granted && context.mounted) {
+                          await uploadImage(
+                              source: ImageSource.gallery, context: context);
+                        } else {
+                          var resImage = await uploadImage(
+                              source: ImageSource.gallery, context: context);
+                        }
+                      },
+                      child: const SizedBox(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.image,
+                                size: 30,
                               ),
-                              MyTextWidget(
-                                text: "Gallery",
-                                style: TextStyle(fontSize: 14),
-                              )
-                            ],
-                          ),
+                            ),
+                            MyTextWidget(
+                              text: "Gallery",
+                              style: TextStyle(fontSize: 14),
+                            )
+                          ],
                         ),
                       ),
                     ),
