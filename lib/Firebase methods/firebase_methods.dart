@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:attendance_app/models/second_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -249,6 +250,33 @@ class FirebaseMethods {
     } catch (e) {
       log('Error creating user: $e');
       return false;
+    }
+  }
+
+  static Future<UserModel?> getUserProfile({required String? userUid}) async {
+    try {
+      log("userUID $userUid");
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userUid)
+              .collection('myProfile')
+              .orderBy('timestamp', descending: true)
+              .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        Map<String, dynamic> userData = querySnapshot.docs.first.data();
+        log("userData $userData");
+        UserModel userModel = UserModel.fromJson(userData);
+        log("userModel $userModel");
+        return userModel;
+      } else {
+        log("No documents found for user profile");
+        return null;
+      }
+    } catch (e) {
+      log('Error getting user profile: $e');
+      return null;
     }
   }
 }
