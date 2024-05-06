@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: GoogleFonts.poppins().fontFamily,
           dividerColor: Colors.transparent,
+          
           datePickerTheme: const DatePickerThemeData(
               backgroundColor: Colors.white, cancelButtonStyle: ButtonStyle()),
         ),
