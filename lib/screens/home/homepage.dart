@@ -7,6 +7,8 @@ import 'package:attendance_app/components/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../shared/exit_popup.dart';
+
 class Home extends StatefulWidget {
   const Home({
     super.key,
@@ -27,42 +29,45 @@ class _HomeState extends State<Home> {
           const ProfilePage(),
         ];
 
-        return Scaffold(
-          backgroundColor: Colors.deepPurple.shade100,
-          appBar: SecondaryAppBar(
-            screenName: 'Attendance',
-            leading: Builder(
-              builder: (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
+        return WillPopScope(
+          onWillPop: ()=>showExitPopup(context),
+          child: Scaffold(
+            backgroundColor: Colors.deepPurple.shade100,
+            appBar: SecondaryAppBar(
+              screenName: 'Attendance',
+              leading: Builder(
+                builder: (context) => IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
               ),
             ),
+            body: pages[bottomNavBarProvider.selectedIndex],
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.calendar_today),
+                  label: 'Calendar',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Profile',
+                ),
+              ],
+              currentIndex: bottomNavBarProvider.selectedIndex,
+              selectedItemColor: Colors.blue,
+              onTap: (index) {
+                bottomNavBarProvider.setIndex(index);
+              },
+            ),
+            drawer: const Drawers(),
           ),
-          body: pages[bottomNavBarProvider.selectedIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today),
-                label: 'Calendar',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-            ],
-            currentIndex: bottomNavBarProvider.selectedIndex,
-            selectedItemColor: Colors.blue,
-            onTap: (index) {
-              bottomNavBarProvider.setIndex(index);
-            },
-          ),
-          drawer: const Drawers(),
         );
       },
     );
