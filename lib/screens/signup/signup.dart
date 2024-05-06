@@ -11,7 +11,6 @@ import 'package:attendance_app/providers/location_service_provider.dart';
 import 'package:attendance_app/providers/password_visibility_provider.dart';
 import 'package:attendance_app/routes/route_const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:random_string_generator/random_string_generator.dart';
@@ -99,7 +98,7 @@ class _SignUpState extends State<SignUp> {
                       height: 166,
                       width: double.infinity,
                       decoration: const BoxDecoration(
-                        color: deepPurpleColor,
+                        color: ColorConst.deepPurpleColor,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(45),
                           bottomRight: Radius.circular(45),
@@ -196,7 +195,7 @@ class _SignUpState extends State<SignUp> {
                                   value.passwordVisibility
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: deepPurpleColor,
+                                  color: ColorConst.deepPurpleColor,
                                 ),
                               ),
                             ),
@@ -223,7 +222,7 @@ class _SignUpState extends State<SignUp> {
                                     value.confirmPasswordVisibility
                                         ? Icons.visibility
                                         : Icons.visibility_off,
-                                    color: deepPurpleColor,
+                                    color: ColorConst.deepPurpleColor,
                                   ),
                                 ),
                                 controller: _confirmPwController)

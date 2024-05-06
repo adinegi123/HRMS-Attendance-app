@@ -1,3 +1,4 @@
+import 'package:attendance_app/services/navgator_key.dart';
 import 'package:attendance_app/providers/bottom_navbar_provider.dart';
 import 'package:attendance_app/providers/date_Provider.dart';
 import 'package:attendance_app/providers/image_provider.dart';
@@ -9,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   static PasswordVisibilityProvider passwordVisibility =
@@ -17,12 +18,13 @@ class MyApp extends StatelessWidget {
   static BottomNavBarProvider bottomNavBar = BottomNavBarProvider();
   static ImagePickerProvider imageProvider = ImagePickerProvider();
 
-  static LocationServiceProvider locationServiceProvider = LocationServiceProvider();
+  static LocationServiceProvider locationServiceProvider =
+      LocationServiceProvider();
 
   static DateProvider dateProvider = DateProvider();
 
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
-  GlobalKey<ScaffoldMessengerState>();
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: passwordVisibility),
         ChangeNotifierProvider.value(value: bottomNavBar),
         ChangeNotifierProvider.value(value: imageProvider),
-
         ChangeNotifierProvider.value(value: locationServiceProvider),
-
         ChangeNotifierProvider.value(value: dateProvider),
-
       ],
       child: MaterialApp(
         title: 'Attendance App',
@@ -48,6 +47,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: Colors.white, cancelButtonStyle: ButtonStyle()),
         ),
         initialRoute: '/',
+        // navigatorKey: NavigationService().navigatorKey,
         onGenerateRoute: RouteGenerator.onGenerateRoute,
       ),
     );

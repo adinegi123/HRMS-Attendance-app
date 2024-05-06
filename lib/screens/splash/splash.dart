@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:attendance_app/Firebase%20methods/firebase_methods.dart';
 import 'package:attendance_app/class/constant.dart';
+import 'package:attendance_app/services/navgator_key.dart';
 import 'package:attendance_app/providers/location_service_provider.dart';
 import 'package:attendance_app/routes/route_const.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     initApp();
     super.initState();
-    // checkLoginStatusAndNavigate();
-    // initApp();
   }
 
   Future<void> initApp() async {
@@ -72,9 +71,9 @@ class _SplashScreenState extends State<SplashScreen> {
       latitude = position.latitude;
       longitude = position.longitude;
 
-      print('Latitude: $latitude, Longitude: $longitude');
+      log('Latitude: $latitude, Longitude: $longitude');
     } catch (e) {
-      print('Error requesting location permission: $e');
+      log('Error requesting location permission: $e');
       Fluttertoast.showToast(msg: 'Error requesting location permission.');
     }
   }
@@ -87,37 +86,26 @@ class _SplashScreenState extends State<SplashScreen> {
         .fetchData(); // Fetch user info including location
     bool isLoggedIn = await FirebaseMethods.isUserSignedIn();
     if (context.mounted) {
-      Future.delayed(const Duration(seconds: 3), () {
+      Future.delayed(const Duration(seconds: 2), () {
         if (isLoggedIn) {
+          // service.routeNamedReplacement(Routes.homePageRoute);
           Navigator.pushReplacementNamed(context, Routes.homePageRoute);
         } else {
+          // service.routeNamedReplacement(Routes.loginPageRoute);
           Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
         }
       });
     }
   }
 
-  // Future<void> checkLoginStatusAndNavigate() async {
-  //   bool isLoggedIn = await FirebaseMethods.isUserSignedIn();
-  //   // bool isLoggedIn = await LocalDb.isLogin();
-  //   log('loginStatus $isLoggedIn');
-  //   if (context.mounted) {
-  //     Future.delayed(const Duration(seconds: 3), () {
-  //       if (isLoggedIn) {
-  //         Navigator.pushReplacementNamed(context, Routes.homePageRoute);
-  //       } else {
-  //         Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
-  //       }
-  //     });
-  //   }
-  // }
   late double latitude;
   late double longitude;
+  NavigationService service = NavigationService();
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: deepPurpleColor,
+      backgroundColor: ColorConst.deepPurpleColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

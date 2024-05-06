@@ -62,7 +62,7 @@ class _LoginState extends State<Login> {
                     height: 166,
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                      color: deepPurpleColor,
+                      color: ColorConst.deepPurpleColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(45),
                         bottomRight: Radius.circular(45),
@@ -137,7 +137,7 @@ class _LoginState extends State<Login> {
                               },
                               child: Icon(value.passwordVisibility
                                   ? Icons.visibility
-                                  : Icons.visibility_off,color: deepPurpleColor,),
+                                  : Icons.visibility_off,color: ColorConst.deepPurpleColor,),
                             ),
                           );
                         }),
