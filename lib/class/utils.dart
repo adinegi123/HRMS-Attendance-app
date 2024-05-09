@@ -1,8 +1,11 @@
+import 'package:flutter/foundation.dart';
+
 class Utils {
   static bool isEmail(String email) {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(email);
   }
+
   static bool isPhoneNumber(String input) {
     // Regular expression to validate phone numbers
     final phoneRegex = RegExp(r'^(?:[+0]9)?[0-9]{10}$');
@@ -35,6 +38,7 @@ class Utils {
     gridDates.removeDuplicates();
     return gridDates;
   }
+
   static List<int> getYears() {
     final DateTime now = DateTime.now();
     List<int> returnList = [];
@@ -44,6 +48,19 @@ class Utils {
     print(returnList);
     return returnList;
   }
+
+  static List<int> getPastFourYears() {
+    final DateTime now = DateTime.now();
+    List<int> returnList = [];
+    for (int i = 0; i < 4; i++) {
+      returnList.add(now.subtract(Duration(days: i * 365)).year);
+    }
+    if (kDebugMode) {
+      print(returnList);
+    }
+    return returnList;
+  }
+
   static String getMonthName(int month) {
     switch (month) {
       case 1:
@@ -75,6 +92,7 @@ class Utils {
     }
   }
 }
+
 extension RemoveDuplicates<E> on List<E> {
   List<E> removeDuplicates() {
     Set<E> uniqueItems = <E>{};

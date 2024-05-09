@@ -1,3 +1,4 @@
+import 'package:attendance_app/screens/dashboard/widget/attendance_calender.dart';
 import 'package:flutter/material.dart';
 
 class DashBoard extends StatefulWidget {
@@ -11,7 +12,7 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('Dashboard Page'),
+      child: Text('Dashboard'),
     );
   }
 }

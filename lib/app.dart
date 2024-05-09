@@ -1,3 +1,4 @@
+import 'package:attendance_app/screens/dashboard/provider/calender_provider.dart';
 import 'package:attendance_app/services/navgator_key.dart';
 import 'package:attendance_app/providers/bottom_navbar_provider.dart';
 import 'package:attendance_app/providers/date_Provider.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       LocationServiceProvider();
 
   static DateProvider dateProvider = DateProvider();
+  static CalenderProvider calenderProvider = CalenderProvider();
 
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
@@ -35,6 +37,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: imageProvider),
         ChangeNotifierProvider.value(value: locationServiceProvider),
         ChangeNotifierProvider.value(value: dateProvider),
+        ChangeNotifierProvider.value(value: calenderProvider),
       ],
       child: MaterialApp(
         title: 'Attendance App',
