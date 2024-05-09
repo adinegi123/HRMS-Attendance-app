@@ -2,7 +2,7 @@ import 'package:attendance_app/class/constant.dart';
 import 'package:attendance_app/components/secondary_appbar.dart';
 import 'package:attendance_app/providers/bottom_navbar_provider.dart';
 import 'package:attendance_app/screens/calender_page/calender_page.dart';
-import 'package:attendance_app/screens/dashboard/view/dashboard_view.dart';
+
 import 'package:attendance_app/screens/profile/profile_page.dart';
 import 'package:attendance_app/components/drawer.dart';
 import 'package:flutter/material.dart';

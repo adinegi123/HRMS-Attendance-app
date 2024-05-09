@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:attendance_app/models/second_user_model.dart';
+import 'package:attendance_app/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -188,8 +189,9 @@ class FirebaseMethods {
   }
 
   static Future<bool> createUser({
+    required bool isRegistered,
     required String userName,
-    required String? userUid,
+    required String? userUId,
     required String? userProfileUid,
     required String? userAge,
     required String? userAddress,
@@ -207,20 +209,17 @@ class FirebaseMethods {
     required String? empDesignation,
     required String? appVersion,
     required String? deviceType,
+    required String? operatingSystem,
     required String? loginTimeStamp,
     required String? logoutTimeStamp,
     required String? floorCount,
   }) async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(userUid).set({});
+      await FirebaseFirestore.instance.collection('users').doc(userUId).set({});
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userUid)
-          .collection('myProfile')
-          .doc(userProfileUid)
-          .set({
-        'userUid': userUid,
+      await FirebaseFirestore.instance.collection('users').doc(userUId).set({
+        'isRegistered': isRegistered,
+        'userUid': userUId,
         'userProfileUid': userProfileUid,
         'userName': userName,
         'userAge': userAge,
@@ -236,10 +235,11 @@ class FirebaseMethods {
         'pinCode': pinCode,
         'password': password,
         'ipAddress': ipAddress,
+        'userAddress': userAddress,
+        'operatingSystem': operatingSystem,
         'empDesignation': empDesignation,
         'appVersion': appVersion,
         'deviceType': deviceType?.toString(),
-        // Convert enum to string if not null
         'loginTimeStamp': loginTimeStamp,
         'logoutTimeStamp': logoutTimeStamp,
         'floorCount': floorCount,
@@ -253,7 +253,8 @@ class FirebaseMethods {
     }
   }
 
-  static Future<UserModel?> getUserProfile({required String? userUid}) async {
+  static Future<UserDataModel?> getUserProfile(
+      {required String? userUid}) async {
     try {
       log("userUID $userUid");
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -267,9 +268,9 @@ class FirebaseMethods {
       if (querySnapshot.docs.isNotEmpty) {
         Map<String, dynamic> userData = querySnapshot.docs.first.data();
         log("userData $userData");
-        UserModel userModel = UserModel.fromJson(userData);
-        log("userModel $userModel");
-        return userModel;
+        UserDataModel userDataModelModel = UserDataModel.fromJson(userData);
+        log("userModel $userDataModelModel");
+        return userDataModelModel;
       } else {
         log("No documents found for user profile");
         return null;

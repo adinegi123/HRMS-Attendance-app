@@ -16,7 +16,7 @@ class Utils {
       int currentMonth, int currentYear) {
     List<DateTime> gridDates = [];
     DateTime firstDayOfCurrentMonth = DateTime(currentYear, currentMonth, 1);
-    int totalDaysToDisplay = 6 * 7;
+    int totalDaysToDisplay = 6 * 7;//for the grid
 
     if (firstDayOfCurrentMonth.weekday == DateTime.monday) {
       for (int i = 0; i < totalDaysToDisplay; i++) {

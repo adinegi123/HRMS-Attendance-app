@@ -2,13 +2,13 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:attendance_app/Firebase%20methods/firebase_methods.dart';
 import 'package:attendance_app/Local%20Database/local_database.dart';
-import 'package:attendance_app/components/custom_popup.dart';
-import 'package:attendance_app/models/second_user_model.dart';
+
+import 'package:attendance_app/models/user_model.dart';
 import 'package:attendance_app/providers/image_provider.dart';
-import 'package:attendance_app/shared/image_bottom_sheet.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../components/custom_text_widget.dart';
+
 import '../../components/my_textfields.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -26,6 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController age = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   late File? image;
+  late UserDataModel? userData;
 
   @override
   void dispose() {
@@ -37,11 +38,41 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   getProfileData();
+  //   super.initState();
+  //   // Provider.of<UserProvider>(context, listen: false).resetValue();
+  // }
+
+  // Future<void> getProfileData() async {
+  //   try {
+  //     var userUID = await LocalDb.getUserUID();
+  //     setState(() async {
+  //       userData = await FirebaseMethods.getUserProfile(userUid: userUID);
+  //       // UserProvider userProvider= Provider.of<UserProvider>(context,listen: false);
+  //       log("userData$userData");
+  //       if (userData!.isRegistered) {
+  //         // userProvider.updateProfileImageLink(imageUrl: userData?.userProfileLink,isUpdate: true);
+  //         employeeName.text = userData!.userName.toString();
+  //         employeeId.text = userData!.userUId.toString();
+  //         DOB.text = userData!.userAge.toString();
+  //         designation.text = userData!.empDesignation.toString();
+  //         age.text = userData!.userAge.toString();
+  //         addressController.text = userData!.userAddress.toString();
+  //       }
+  //     });
+  //   } catch (e) {
+  //     log('Error: $e');
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ImagePickerProvider>(builder: (context, value, child) {
       return SingleChildScrollView(
-        child: FutureBuilder<UserModel?>(
+        child: FutureBuilder<UserDataModel?>(
           future: FirebaseMethods.getUserProfile(userUid: 'abc'),
           builder: (snapshot, context) {
             return Column(
@@ -164,7 +195,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             );
           },
-
         ),
       );
     });

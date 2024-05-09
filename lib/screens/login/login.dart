@@ -130,14 +130,16 @@ class _LoginState extends State<Login> {
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 value.togglePasswordVisibility(
-                                    passwordVisible:
-                                        !value.passwordVisibility,
+                                    passwordVisible: !value.passwordVisibility,
                                     confirmPasswordVisible:
                                         value.confirmPasswordVisibility);
                               },
-                              child: Icon(value.passwordVisibility
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,color: ColorConst.deepPurpleColor,),
+                              child: Icon(
+                                value.passwordVisibility
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: ColorConst.deepPurpleColor,
+                              ),
                             ),
                           );
                         }),

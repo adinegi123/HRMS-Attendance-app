@@ -1,3 +1,4 @@
+import 'package:attendance_app/class/constant.dart';
 import 'package:attendance_app/components/responsive_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -15,12 +16,15 @@ class ProgressIndicatorPopup extends StatelessWidget {
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(child: ResponsiveProgressIndicator()),
+                Center(
+                    child: ResponsiveProgressIndicator(
+                  color: ColorConst.appPurpleColor,
+                )),
                 SizedBox(
                   height: 20,
                 ),
                 Text(
-                  "please wait...",
+                  "Hold on...",
                   style: TextStyle(fontSize: 16),
                 )
               ],

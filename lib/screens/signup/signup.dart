@@ -280,7 +280,8 @@ class _SignUpState extends State<SignUp> {
                                 var userProfileUid = generator.generate();
                                 await LocalDb.setUserProfileUid(userProfileUid);
                                 var res = await FirebaseMethods.createUser(
-                                  userUid: userUid,
+                                  isRegistered: true,
+                                  userUId: userUid,
                                   userProfileUid: userProfileUid,
                                   userName: _nameController.text,
                                   userAge: _ageController.text,
@@ -305,6 +306,7 @@ class _SignUpState extends State<SignUp> {
                                   loginTimeStamp: '',
                                   logoutTimeStamp: '',
                                   floorCount: '2',
+                                  operatingSystem: '',
                                 );
                                 log("response $res");
                                 if (res == true) {
