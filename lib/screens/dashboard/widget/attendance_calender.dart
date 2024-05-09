@@ -3,6 +3,7 @@ import 'package:attendance_app/class/utils.dart';
 import 'package:attendance_app/components/custom_popup.dart';
 import 'package:attendance_app/screens/dashboard/provider/calender_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class AttendanceCalender extends StatelessWidget {
@@ -10,11 +11,11 @@ class AttendanceCalender extends StatelessWidget {
 
   static List<String> weekDays = [
     'M',
-    ' T ',
+    'T',
     'W',
     'TH',
-    ' F',
-    ' S',
+    'F',
+    'S',
     'S',
   ];
 
@@ -124,7 +125,51 @@ class AttendanceCalender extends StatelessWidget {
             ),
           );
         }),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              statusRow(color: Colors.green, text: 'Full-Day Attended'),
+              statusRow(color: Colors.orange, text: 'Half-Day Attended'),
+              statusRow(color: Colors.red, text: 'Leave'),
+              statusRow(color: Colors.grey, text: 'Holidays'),
+            ],
+          ),
+        ),
       ],
+    );
+  }
+
+  Widget statusRow({required Color color, required String text}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  height: 14,
+                  width: 14,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: color,
+                  ),
+                ),
+              ),
+              Text(
+                text,
+                // style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+          const Text('12')
+        ],
+      ),
     );
   }
 }
