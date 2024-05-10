@@ -9,10 +9,6 @@ import '../../components/custom_text_widget.dart';
 import '../../components/my_textfields.dart';
 
 
-
-
-
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -26,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController DOB = TextEditingController();
   final TextEditingController designation = TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  late File? image;
+  //late File? image;
 
   @override
   void dispose() {
@@ -132,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
               suffixIcon: GestureDetector(
                 onTap: ()=> CustomPopup.showDatePicker(
                   context: context, DOB: DOB),
-                child: Icon(Icons.calendar_month),
+                child: const Icon(Icons.calendar_month),
               ),
             ),
             const MyTextWidget(text: "Designation"),
