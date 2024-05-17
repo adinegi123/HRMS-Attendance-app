@@ -24,7 +24,7 @@ class ImagePick extends StatelessWidget {
       );
       if (croppedImage != null && context.mounted) {
         String imagePath = croppedImage.path;
-        Provider.of<PasswordVisibilityProvider>(context, listen: false)
+        Provider.of<ImagePickerProvider>(context, listen: false)
             .updateUserImageFile(file: croppedImage);
         Navigator.pop(context);
         return imagePath;
