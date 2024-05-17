@@ -210,7 +210,7 @@ class FirebaseMethods {
     required String? appVersion,
     required String? deviceType,
     required String? operatingSystem,
-    required String? loginTimeStamp,
+    required DateTime? loginTimeStamp,
     required String? logoutTimeStamp,
     required String? floorCount,
   }) async {
@@ -240,8 +240,8 @@ class FirebaseMethods {
         'empDesignation': empDesignation,
         'appVersion': appVersion,
         'deviceType': deviceType?.toString(),
-        'loginTimeStamp': loginTimeStamp,
-        'logoutTimeStamp': logoutTimeStamp,
+        'loginDateTime': loginTimeStamp,
+        'logoutDateTime': logoutTimeStamp,
         'floorCount': floorCount,
         'timestamp': FieldValue.serverTimestamp(),
       });

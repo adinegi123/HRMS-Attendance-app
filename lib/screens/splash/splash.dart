@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,29 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> initApp() async {
     await requestLocationPermission();
-    await fetchUserInfoAndNavigate();
+    // await fetchUserInfoAndNavigate();
+    checkLoginDurationAndNavigate();
   }
-
-  // Future<void> requestLocationPermission() async {
-  //   loc.Location location = loc.Location();
-  //   bool serviceEnabled = await location.serviceEnabled();
-  //   if (!serviceEnabled) {
-  //     serviceEnabled = await location.requestService();
-  //     if (!serviceEnabled) {
-  //       Fluttertoast.showToast(msg: 'Location service not enabled.');
-  //       return;
-  //     }
-  //   }
-  //   loc.PermissionStatus permission = await location.hasPermission();
-  //   if (permission == loc.PermissionStatus.denied ||
-  //       permission == loc.PermissionStatus.deniedForever) {
-  //     permission = await location.requestPermission();
-  //     if (permission != loc.PermissionStatus.granted) {
-  //       Fluttertoast.showToast(msg: 'Location permission not granted.');
-  //       return;
-  //     }
-  //   }
-  // }
 
   Future<void> requestLocationPermission() async {
     try {
@@ -74,7 +55,10 @@ class _SplashScreenState extends State<SplashScreen> {
       log('Latitude: $latitude, Longitude: $longitude');
     } catch (e) {
       log('Error requesting location permission: $e');
-      Fluttertoast.showToast(msg: 'Error requesting location permission.');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Location permission not granted."),
+        duration: Duration(seconds: 2),
+      ));
     }
   }
 
@@ -95,6 +79,33 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
         }
       });
+    }
+  }
+
+  Future<void> checkLoginDurationAndNavigate() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('loginDateTime', DateTime.now().toString());
+    String? loginDateString = prefs.getString('loginDateTime');
+    log('loginDateString==============================>>>>>>>>>>>>>>>>>>>>>>>${loginDateString.toString()}');
+    if (loginDateString != null) {
+      DateTime loginDateTime = DateTime.parse(loginDateString);
+      DateTime currentDateTime = DateTime.parse('2024-05-15 18:10:49.001920');
+      Duration difference = currentDateTime.difference(loginDateTime);
+      bool isLoggedIn = await FirebaseMethods.isUserSignedIn();
+      if (isLoggedIn && difference.inDays < 45) {
+        // User is logged in and login duration is less than 45 days, navigate to home
+        Navigator.pushReplacementNamed(context, Routes.homePageRoute);
+      } else {
+        // User needs to re-login or log out
+        Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Login session expired."),
+          duration: Duration(seconds: 2),
+        ));
+      }
+    } else {
+      // No login date found, navigate to login screen
+      Navigator.pushReplacementNamed(context, Routes.loginPageRoute);
     }
   }
 

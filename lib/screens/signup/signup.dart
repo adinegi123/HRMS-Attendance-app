@@ -275,6 +275,7 @@ class _SignUpState extends State<SignUp> {
                                 var userUid = userCredential.user?.uid;
                                 log("userUid-->$userUid");
                                 await LocalDb.setUserUID(userUid!);
+
                                 var generator =
                                     RandomStringGenerator(fixedLength: 10);
                                 var userProfileUid = generator.generate();
@@ -303,11 +304,12 @@ class _SignUpState extends State<SignUp> {
                                   deviceType:
                                       locationServiceProvider.deviceName,
                                   // Assuming _deviceType is an enum value
-                                  loginTimeStamp: '',
+                                  loginTimeStamp: DateTime.now(),
                                   logoutTimeStamp: '',
                                   floorCount: '2',
                                   operatingSystem: '',
                                 );
+                                // await LocalDb.setLoginDateTime(loginTimeStamp);
                                 log("response $res");
                                 if (res == true) {
                                   CustomPopup.dismissProgressIndicator();
