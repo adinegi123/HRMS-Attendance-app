@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:attendance_app/Firebase%20methods/firebase_methods.dart';
 import 'package:attendance_app/Local%20Database/local_database.dart';
 import 'package:attendance_app/class/form%20validation.dart';
@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:random_string_generator/random_string_generator.dart';
 
@@ -36,6 +37,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPwController = TextEditingController();
+  File? _profileImage;
 
   @override
   void dispose() {
@@ -50,6 +52,16 @@ class _SignUpState extends State<SignUp> {
     _passwordController.clear();
     _confirmPwController.clear();
   }
+
+  Future<void> _pickImage(ImageSource source) async {
+   // final picker = ImagePicker();
+    //final pickedFile = await picker.pickImage(source: source);
+
+    setState(() {
+      showImagePicker(context);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +95,11 @@ class _SignUpState extends State<SignUp> {
                       Center(
                         child: Stack(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 50,
-                              backgroundColor: Colors.white,
-                              backgroundImage: AssetImage("assets/images/profile_image.png"),
+                              backgroundImage: _profileImage != null
+                                  ? Image.file(_profileImage!).image
+                                  : const AssetImage("assets/images/profile_image.png"),
                             ),
                             Positioned(
                               bottom: 0,
@@ -96,7 +109,8 @@ class _SignUpState extends State<SignUp> {
                                 backgroundColor: Colors.white,
                                 child: GestureDetector(
                                     onTap: (){
-                                      showImagePicker(context);
+                                      //showImagePicker(context);
+                                      _pickImage(ImageSource.gallery);
                                     },
                                     child: const Icon(Icons.add)),
                               ),
@@ -104,6 +118,78 @@ class _SignUpState extends State<SignUp> {
                           ],
                         ),
                       ),
+
+                      /*Center(
+                        child: Stack(
+                          children: [
+                            const SizedBox(
+                              width: 105,
+                              height: 105,
+                            ),
+                            Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: (value.userImage != null)
+                                    ? DecorationImage(
+                                  image: FileImage(
+                                    File(value.userImage!.path),
+                                  ),
+                                  fit: BoxFit.cover,
+                                )
+                                    : null,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    spreadRadius: -2,
+                                    blurRadius: 20.0,
+                                    blurStyle: BlurStyle.inner,
+                                  ),
+                                ],
+                              ),
+                              child: (value.userImage == null)
+                                  ? const Icon(
+                                Icons.person,
+                                size: 60,
+                              )
+                                  : null,
+                            ),
+                            Positioned(
+                              bottom: 5,
+                              right: 3,
+                              child: GestureDetector(
+                                onTap: () {
+                                  try {
+                                    log("error");
+                                    log("error in");
+                                    showImagePicker(context);
+                                  } catch (e) {
+                                    log("Error selecting image: $e");
+                                    // Handle error gracefully, e.g., show a snackbar
+                                  }
+                                  //showImagePicker(context);
+                                  //CustomPopup.showImagePickerPopup(context: context);
+                                },
+                                child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Center(
+                                    child: CircleAvatar(
+                                        radius: 15,
+                                        backgroundColor: Colors.white,
+                                        child: Icon(Icons.add)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),*/
+
                       const SizedBox(height: 50,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 28.0),

@@ -1,3 +1,4 @@
+import 'package:attendance_app/providers/password_visibility_provider.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,7 +24,7 @@ class ImagePick extends StatelessWidget {
       );
       if (croppedImage != null && context.mounted) {
         String imagePath = croppedImage.path;
-        Provider.of<ImagePickerProvider>(context, listen: false)
+        Provider.of<PasswordVisibilityProvider>(context, listen: false)
             .updateUserImageFile(file: croppedImage);
         Navigator.pop(context);
         return imagePath;
