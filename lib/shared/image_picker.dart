@@ -1,4 +1,4 @@
-import 'package:attendance_app/providers/password_visibility_provider.dart';
+
 import 'package:image_cropper/image_cropper.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +14,7 @@ class ImagePick extends StatelessWidget {
   final ImagePicker _imagePicker = ImagePicker();
   final ImageCropper _imageCropper = ImageCropper();
 
-  Future<String?> uploadImage(
+  Future<CroppedFile?> uploadImage(
       {required ImageSource source, required BuildContext context}) async {
     var resImage = await _imagePicker.pickImage(source: source);
     if (resImage != null) {
@@ -24,10 +24,10 @@ class ImagePick extends StatelessWidget {
       );
       if (croppedImage != null && context.mounted) {
         String imagePath = croppedImage.path;
-        Provider.of<ImagePickerProvider>(context, listen: false)
-            .updateUserImageFile(file: croppedImage);
+        Provider.of<ImagePickerProvider>(context, listen: false).
+        uploadPicture(croppedImage);
         Navigator.pop(context);
-        return imagePath;
+        return croppedImage;
       }
     }
     return null;
@@ -70,8 +70,12 @@ class ImagePick extends StatelessWidget {
                         } else {
                           // positive case
                           // ignore: use_build_context_synchronously
-                          var resImage = await uploadImage(
-                              source: ImageSource.camera, context: context);
+                          var croppedImage = await uploadImage(
+                              source: ImageSource.gallery, context: context);
+                          if (croppedImage != null) {
+                            Provider.of<ImagePickerProvider>(context, listen: false).uploadPicture(croppedImage);
+                            Navigator.pop(context);
+                          }
                         }
                       },
                       buttonText: const Row(

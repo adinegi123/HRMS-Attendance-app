@@ -58,10 +58,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: 100,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      image: (value.userImage != null)
+                      image: (value.profileImageFile != null)
                           ? DecorationImage(
                               image: FileImage(
-                                File(value.userImage!.path),
+                                File(value.profileImageFile!.path),
                               ),
                               fit: BoxFit.cover,
                             )
@@ -75,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                     ),
-                    child: (value.userImage == null)
+                    child: (value.profileImageFile == null)
                         ? const Icon(
                             Icons.person,
                             size: 60,
@@ -90,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         try {
                           log("error");
                           log("error in");
-                          showImagePicker(context);
+                         CustomPopup.showImagePickerPopup(context: context);
                         } catch (e) {
                           log("Error selecting image: $e");
                           // Handle error gracefully, e.g., show a snackbar

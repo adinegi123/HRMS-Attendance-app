@@ -10,16 +10,12 @@ import 'package:attendance_app/providers/location_service_provider.dart';
 import 'package:attendance_app/providers/password_visibility_provider.dart';
 import 'package:attendance_app/routes/route_const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:provider/provider.dart';
 import 'package:random_string_generator/random_string_generator.dart';
-
 import '../../components/custom_popup.dart';
-import '../../shared/image_bottom_sheet.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({
@@ -53,21 +49,12 @@ class _SignUpState extends State<SignUp> {
     _confirmPwController.clear();
   }
 
-  Future<void> _pickImage(ImageSource source) async {
-   // final picker = ImagePicker();
-    //final pickedFile = await picker.pickImage(source: source);
-
-    setState(() {
-      showImagePicker(context);
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return Consumer<PasswordVisibilityProvider>(
         builder: (context, value, child) {
-          return Scaffold(
+      return Scaffold(
           backgroundColor: Colors.grey.shade300,
           body: SafeArea(
             child: Form(
@@ -78,16 +65,16 @@ class _SignUpState extends State<SignUp> {
                     children: [
                       const Text(
                         "Sign Up",
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       const Text(
                         "Create Your Account",
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       const SizedBox(
                         height: 40,
@@ -99,7 +86,8 @@ class _SignUpState extends State<SignUp> {
                               radius: 50,
                               backgroundImage: _profileImage != null
                                   ? Image.file(_profileImage!).image
-                                  : const AssetImage("assets/images/profile_image.png"),
+                                  : const AssetImage(
+                                      "assets/images/profile_image.png"),
                             ),
                             Positioned(
                               bottom: 0,
@@ -108,9 +96,9 @@ class _SignUpState extends State<SignUp> {
                                 radius: 15,
                                 backgroundColor: Colors.white,
                                 child: GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       //showImagePicker(context);
-                                      _pickImage(ImageSource.gallery);
+                                      CustomPopup.showImagePickerPopup(context: context);
                                     },
                                     child: const Icon(Icons.add)),
                               ),
@@ -190,7 +178,9 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),*/
 
-                      const SizedBox(height: 50,),
+                      const SizedBox(
+                        height: 50,
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 28.0),
                         child: MyTextField(
@@ -213,67 +203,67 @@ class _SignUpState extends State<SignUp> {
                       ),
 
                       // password provider
-                            Column(
-                              children: [
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 28.0),
-                                  child: MyTextField(
-                                    hintText: "Password",
-                                    prefixIcon: const Icon(Icons.lock),
-                                    controller: _passwordController,
-                                    obscureText: !value.passwordVisibility,
-                                    validator: (s) {
-                                      return FormValidationFunction.checkPassword(s,
-                                          signUp: true, login: false);
-                                    },
-                                    suffixIcon: GestureDetector(
-                                      onTap: () {
-                                        value.togglePasswordVisibility(
-                                          passwordVisible: !value.passwordVisibility,
-                                          confirmPasswordVisible:
-                                          value.confirmPasswordVisibility,
-                                        );
-                                      },
-                                      child: Icon(value.passwordVisibility
-                                          ? Icons.visibility
-                                          : Icons.visibility_off),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 28.0),
-                                  child: MyTextField(
-                                      hintText: "Confirm Password",
-                                      prefixIcon: const Icon(Icons.lock),
-                                      obscureText: !value.confirmPasswordVisibility,
-                                      validator: (s) {
-                                        if (s!.trim() !=
-                                            _passwordController.text.trim()) {
-                                          return 'Password not same';
-                                        }
-                                        return null;
-                                      },
-                                      suffixIcon: GestureDetector(
-                                        onTap: () {
-                                          value.togglePasswordVisibility(
-                                            passwordVisible: value.passwordVisibility,
-                                            confirmPasswordVisible:
-                                            !value.confirmPasswordVisibility,
-                                          );
-                                        },
-                                        child: Icon(value.confirmPasswordVisibility
-                                            ? Icons.visibility
-                                            : Icons.visibility_off),
-                                      ),
-                                      controller: _confirmPwController),
-                                )
-                              ],
+                      Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 28.0),
+                            child: MyTextField(
+                              hintText: "Password",
+                              prefixIcon: const Icon(Icons.lock),
+                              controller: _passwordController,
+                              obscureText: !value.passwordVisibility,
+                              validator: (s) {
+                                return FormValidationFunction.checkPassword(s,
+                                    signUp: true, login: false);
+                              },
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  value.togglePasswordVisibility(
+                                    passwordVisible: !value.passwordVisibility,
+                                    confirmPasswordVisible:
+                                        value.confirmPasswordVisibility,
+                                  );
+                                },
+                                child: Icon(value.passwordVisibility
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                              ),
                             ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 28.0),
+                            child: MyTextField(
+                                hintText: "Confirm Password",
+                                prefixIcon: const Icon(Icons.lock),
+                                obscureText: !value.confirmPasswordVisibility,
+                                validator: (s) {
+                                  if (s!.trim() !=
+                                      _passwordController.text.trim()) {
+                                    return 'Password not same';
+                                  }
+                                  return null;
+                                },
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    value.togglePasswordVisibility(
+                                      passwordVisible: value.passwordVisibility,
+                                      confirmPasswordVisible:
+                                          !value.confirmPasswordVisibility,
+                                    );
+                                  },
+                                  child: Icon(value.confirmPasswordVisibility
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                ),
+                                controller: _confirmPwController),
+                          )
+                        ],
+                      ),
                       const SizedBox(
                         height: 50,
                       ),
@@ -281,20 +271,23 @@ class _SignUpState extends State<SignUp> {
                         onTap: () async {
                           if (widget._formKey.currentState!.validate()) {
                             CustomPopup.showProgressIndicator(context: context);
-                            LocationServiceProvider locationServiceProvider = Provider.of<LocationServiceProvider>(context, listen: false);
+                            LocationServiceProvider locationServiceProvider =
+                                Provider.of<LocationServiceProvider>(context,
+                                    listen: false);
                             await locationServiceProvider.fetchData();
-                            UserCredential? userCredential = await FirebaseMethods.signUp(
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                                context: context
-                            );
+                            UserCredential? userCredential =
+                                await FirebaseMethods.signUp(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                    context: context);
                             if (userCredential != null) {
                               log("userCredential$userCredential");
                               var userUid = userCredential.user?.uid;
                               log("userUid-->$userUid");
                               await LocalDb.setUserUID(userUid!);
-                              var generator = RandomStringGenerator(fixedLength: 10);
-                              var userProfileUid =generator.generate();
+                              var generator =
+                                  RandomStringGenerator(fixedLength: 10);
+                              var userProfileUid = generator.generate();
                               await LocalDb.setUserProfileUid(userProfileUid);
                               var res = await FirebaseMethods.createUser(
                                 userUid: userUid,
@@ -308,7 +301,8 @@ class _SignUpState extends State<SignUp> {
                                 mobileNumber: '',
                                 countryCode: '+91',
                                 stateCode: '',
-                                latLong: '${locationServiceProvider.latitude},${locationServiceProvider.longitude}',
+                                latLong:
+                                    '${locationServiceProvider.latitude},${locationServiceProvider.longitude}',
                                 localityCode: '',
                                 pinCode: '',
                                 password: _passwordController.text,
@@ -324,7 +318,8 @@ class _SignUpState extends State<SignUp> {
                               log("response $res");
                               if (res == true) {
                                 CustomPopup.dismissProgressIndicator();
-                                Navigator.pushNamedAndRemoveUntil(context, Routes.homePageRoute, (route) => false);
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    Routes.homePageRoute, (route) => false);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Signed Up successfully!'),
@@ -363,8 +358,8 @@ class _SignUpState extends State<SignUp> {
                             children: [
                               TextSpan(
                                 text: ' Login',
-                                style:
-                                const TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Navigator.pushNamed(
