@@ -15,6 +15,7 @@ class ImagePick extends StatelessWidget {
   final ImageCropper _imageCropper = ImageCropper();
 
   Future<CroppedFile?> uploadImage(
+
       {required ImageSource source, required BuildContext context}) async {
     var resImage = await _imagePicker.pickImage(source: source);
     if (resImage != null) {
