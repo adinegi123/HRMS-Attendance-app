@@ -438,6 +438,9 @@ class _SignUpState extends State<SignUp> {
                           return FormValidationFunction.checkIfEmpty(s);
                         },
                       ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0, bottom: 20),
                         child: Buttons(
@@ -529,94 +532,94 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                       const SizedBox(
-                        height: 50,
-                      ),
-                      Buttons(
-                        onTap: () async {
-                          if (widget._formKey.currentState!.validate()) {
-                            CustomPopup.showProgressIndicator(context: context);
-                            LocationServiceProvider locationServiceProvider =
-                                Provider.of<LocationServiceProvider>(context,
-                                    listen: false);
-                            await locationServiceProvider.fetchData();
-                            UserCredential? userCredential =
-                                await FirebaseMethods.signUp(
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                    context: context);
-                            if (userCredential != null) {
-                              log("userCredential$userCredential");
-                              var userUid = userCredential.user?.uid;
-                              log("userUid-->$userUid");
-                              await LocalDb.setUserUID(userUid!);
-                              var generator =
-                                  RandomStringGenerator(fixedLength: 10);
-                              var userProfileUid = generator.generate();
-                              await LocalDb.setUserProfileUid(userProfileUid);
-                              var res = await FirebaseMethods.createUser(
-                                userUId: userUid,
-                                userProfileUid: userProfileUid,
-                                userName: '',
-                                userAge: '',
-                                userAddress: '',
-                                userEmail: _emailController.text,
-                                associatedCluster: 'ABC',
-                                profileImageURL: '',
-                                mobileNumber: '',
-                                countryCode: '+91',
-                                stateCode: '',
-                                latLong:
-                                    '${locationServiceProvider.latitude},${locationServiceProvider.longitude}',
-                                localityCode: '',
-                                pinCode: '',
-                                password: _passwordController.text,
-                                ipAddress: locationServiceProvider.ipAddress,
-                                empDesignation: 'flutter developer',
-                                appVersion: '',
-                                deviceType: locationServiceProvider.deviceName,
-                                // Assuming _deviceType is an enum value
-                                loginTimeStamp: DateTime.now(),
-                                logoutTimeStamp: '',
-                                floorCount: '2',
-                                isRegistered: true,
-                                operatingSystem: 'android',
-                              );
-                              log("response $res");
-                              if (res == true) {
-                                CustomPopup.dismissProgressIndicator();
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    Routes.homePageRoute, (route) => false);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Signed Up successfully!'),
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Something went wrong'),
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
-                              }
-                            } else {
-                              Navigator.of(context).pop();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Failed to Sign Up'),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                              clearControllers();
-                            }
-                          }
-                        },
-                        buttonText: const Center(child: Text('Sign up')),
-                      ),
-                      const SizedBox(
                         height: 20,
                       ),
+                      // Buttons(
+                      //   onTap: () async {
+                      //     if (widget._formKey.currentState!.validate()) {
+                      //       CustomPopup.showProgressIndicator(context: context);
+                      //       LocationServiceProvider locationServiceProvider =
+                      //           Provider.of<LocationServiceProvider>(context,
+                      //               listen: false);
+                      //       await locationServiceProvider.fetchData();
+                      //       UserCredential? userCredential =
+                      //           await FirebaseMethods.signUp(
+                      //               email: _emailController.text,
+                      //               password: _passwordController.text,
+                      //               context: context);
+                      //       if (userCredential != null) {
+                      //         log("userCredential$userCredential");
+                      //         var userUid = userCredential.user?.uid;
+                      //         log("userUid-->$userUid");
+                      //         await LocalDb.setUserUID(userUid!);
+                      //         var generator =
+                      //             RandomStringGenerator(fixedLength: 10);
+                      //         var userProfileUid = generator.generate();
+                      //         await LocalDb.setUserProfileUid(userProfileUid);
+                      //         var res = await FirebaseMethods.createUser(
+                      //           userUId: userUid,
+                      //           userProfileUid: userProfileUid,
+                      //           userName: '',
+                      //           userAge: '',
+                      //           userAddress: '',
+                      //           userEmail: _emailController.text,
+                      //           associatedCluster: 'ABC',
+                      //           profileImageURL: '',
+                      //           mobileNumber: '',
+                      //           countryCode: '+91',
+                      //           stateCode: '',
+                      //           latLong:
+                      //               '${locationServiceProvider.latitude},${locationServiceProvider.longitude}',
+                      //           localityCode: '',
+                      //           pinCode: '',
+                      //           password: _passwordController.text,
+                      //           ipAddress: locationServiceProvider.ipAddress,
+                      //           empDesignation: 'flutter developer',
+                      //           appVersion: '',
+                      //           deviceType: locationServiceProvider.deviceName,
+                      //           // Assuming _deviceType is an enum value
+                      //           loginTimeStamp: DateTime.now(),
+                      //           logoutTimeStamp: '',
+                      //           floorCount: '2',
+                      //           isRegistered: true,
+                      //           operatingSystem: 'android',
+                      //         );
+                      //         log("response $res");
+                      //         if (res == true) {
+                      //           CustomPopup.dismissProgressIndicator();
+                      //           Navigator.pushNamedAndRemoveUntil(context,
+                      //               Routes.homePageRoute, (route) => false);
+                      //           ScaffoldMessenger.of(context).showSnackBar(
+                      //             const SnackBar(
+                      //               content: Text('Signed Up successfully!'),
+                      //               duration: Duration(seconds: 2),
+                      //             ),
+                      //           );
+                      //         } else {
+                      //           ScaffoldMessenger.of(context).showSnackBar(
+                      //             const SnackBar(
+                      //               content: Text('Something went wrong'),
+                      //               duration: Duration(seconds: 2),
+                      //             ),
+                      //           );
+                      //         }
+                      //       } else {
+                      //         Navigator.of(context).pop();
+                      //         ScaffoldMessenger.of(context).showSnackBar(
+                      //           const SnackBar(
+                      //             content: Text('Failed to Sign Up'),
+                      //             duration: Duration(seconds: 2),
+                      //           ),
+                      //         );
+                      //         clearControllers();
+                      //       }
+                      //     }
+                      //   },
+                      //   buttonText: const Center(child: Text('Sign up')),
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
 
                       // RichText(
                       //   text: TextSpan(
