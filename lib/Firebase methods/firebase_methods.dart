@@ -1,21 +1,26 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:attendance_app/models/second_user_model.dart';
 import 'package:attendance_app/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+
 
 class FirebaseMethods {
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
-  static Future<UserCredential?> signUp(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
+  static Future<UserCredential?> signUp({required String email,
+    required String password,
+    required BuildContext context}) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -42,8 +47,8 @@ class FirebaseMethods {
     }
   }
 
-  Future<UserCredential?> logIn(
-      String email, String password, BuildContext context) async {
+  Future<UserCredential?> logIn(String email, String password,
+      BuildContext context) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: email,
@@ -253,17 +258,45 @@ class FirebaseMethods {
     }
   }
 
+  static Future<String> uploadImage(File imageFile) async {
+    try {
+      // Get the file name
+      String fileName = basename(imageFile.path);
+
+      // Reference to the location where you want to upload the image
+      Reference storageReference = FirebaseStorage.instance.ref().child(
+          'images/$fileName');
+
+      // Upload the file to Firebase Storage
+      UploadTask uploadTask = storageReference.putFile(imageFile);
+
+      // Wait for the upload to complete
+      TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
+
+      // Get the download URL for the uploaded image
+      String downloadURL = await snapshot.ref.getDownloadURL();
+
+      // Return the download URL
+      return downloadURL;
+    } catch (e) {
+      // Error handling
+      log('Error uploading image: $e');
+      return '';
+    }
+  }
+
+
   static Future<UserDataModel?> getUserProfile(
       {required String? userUid}) async {
     try {
       log("userUID $userUid");
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(userUid)
-              .collection('myProfile')
-              .orderBy('timestamp', descending: true)
-              .get();
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userUid)
+          .collection('myProfile')
+          .orderBy('timestamp', descending: true)
+          .get();
 
       if (querySnapshot.docs.isNotEmpty) {
         Map<String, dynamic> userData = querySnapshot.docs.first.data();
