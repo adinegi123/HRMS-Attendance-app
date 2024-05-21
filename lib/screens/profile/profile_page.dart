@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/my_textfields.dart';
+import '../../shared/image.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -51,6 +52,10 @@ class _ProfilePageState extends State<ProfilePage> {
         const SizedBox(
           height: 20,
         ),
+
+                //Profile image set
+                const ImageSelect(),
+
         /*Consumer<ImagePickerProvider>(
             builder: (context, value, child) {*/
 

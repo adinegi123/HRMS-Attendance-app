@@ -72,7 +72,7 @@ class ImagePick extends StatelessWidget {
                           // positive case
                           // ignore: use_build_context_synchronously
                           var croppedImage = await uploadImage(
-                              source: ImageSource.gallery, context: context);
+                              source: ImageSource.camera, context: context);
                           if (croppedImage != null) {
                             Provider.of<ImagePickerProvider>(context, listen: false).uploadPicture(croppedImage);
                             Navigator.pop(context);
