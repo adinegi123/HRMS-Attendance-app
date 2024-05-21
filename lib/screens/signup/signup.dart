@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:random_string_generator/random_string_generator.dart';
 import '../../components/custom_popup.dart';
+import '../../providers/image_provider.dart';
+import '../../shared/image.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({
@@ -288,6 +290,8 @@ class _SignUpState extends State<SignUp> {
                           //       ),
                         ),
                       ),
+
+
                       child: const Padding(
                         padding: EdgeInsets.only(top: 30, left: 20),
                         child: Column(
@@ -312,6 +316,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   )),
+
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -320,6 +325,108 @@ class _SignUpState extends State<SignUp> {
                       const SizedBox(
                         height: 14,
                       ),
+                      /*Center(
+                        child: Stack(
+                          children: [
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundImage: _profileImage != null
+                                  ? Image.file(_profileImage!).image
+                                  : const AssetImage(
+                                  "assets/images/profile_image.png"),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                radius: 15,
+                                backgroundColor: Colors.white,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      //showImagePicker(context);
+                                      CustomPopup.showImagePickerPopup(context: context);
+                                    },
+                                    child: const Icon(Icons.add)),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),*/
+
+                      /*Consumer<ImagePickerProvider>(
+                          builder: (context, value, child) {
+                            return Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      const SizedBox(
+                                        width: 105,
+                                        height: 105,
+                                      ),
+                                      Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          //border: Border.all(color: kOutlineColor),
+                                          image: (value.profileImageFile != null)
+                                              ? DecorationImage(
+                                            image: FileImage(
+                                              File(value.profileImageFile!.path),
+                                            ),
+                                            fit: BoxFit.cover,
+                                          )
+                                              : null,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.1),
+                                              spreadRadius: -2,
+                                              blurRadius: 20.0,
+                                              blurStyle: BlurStyle.inner,
+                                            ),
+                                          ],
+                                        ),
+                                        child: (value.profileImageFile == null)
+                                            ? const Icon(
+                                          Icons.person,
+                                          size: 60,
+                                          //color: kOutlineColor,
+                                        )
+                                            : null,
+                                      ),
+                                      Positioned(
+                                        bottom: 8,
+                                        right: 8,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            CustomPopup.showImagePickerPopup(context: context);
+                                          },
+                                          child: Container(
+                                            height: 25,
+                                            width: 25,
+                                            decoration: const BoxDecoration(
+                                              color: Colors.black,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Center(
+                                              child: Icon(Icons.add,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );}),*/
+                      //Profile image set
+                      const ImageSelect(),
+
+                      const SizedBox(height: 20,),
                       MyTextField(
                           hintText: "Email",
                           keyboardType: TextInputType.emailAddress,
