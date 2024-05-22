@@ -69,14 +69,18 @@ class ImagePick extends StatelessWidget {
                             res == PermissionStatus.restricted) {
                           // negative case
                         } else {
+                          var croppedImage = await uploadImage(
+                              source: ImageSource.camera, context: context);
+                          if (croppedImage != null) {
+                          }
                           // positive case
                           // ignore: use_build_context_synchronously
-                          var croppedImage = await uploadImage(
+                         /* var croppedImage = await uploadImage(
                               source: ImageSource.camera, context: context);
                           if (croppedImage != null) {
                             Provider.of<ImagePickerProvider>(context, listen: false).uploadPicture(croppedImage);
                             Navigator.pop(context);
-                          }
+                          }*/
                         }
                       },
                       buttonText: const Row(
