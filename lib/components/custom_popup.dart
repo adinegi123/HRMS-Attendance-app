@@ -15,7 +15,7 @@ class CustomPopup {
   static showImagePickerPopup({required BuildContext context}) {
     return showDialog(
       context: context,
-      builder: (context) => ImagePick(),
+      builder: (context) => ImagePick(),  
     );
   }
 
