@@ -1,5 +1,6 @@
 import 'package:attendance_app/routes/route_const.dart';
 import 'package:attendance_app/screens/calender_page/calender_page.dart';
+import 'package:attendance_app/screens/dashboard/view/dashboard_view.dart';
 import 'package:attendance_app/screens/home/homepage.dart';
 import 'package:attendance_app/screens/login/login.dart';
 import 'package:attendance_app/screens/profile/profile_page.dart';
@@ -50,11 +51,18 @@ class RouteGenerator {
             settings: settings,
             route: SignUp(formKey:GlobalKey<FormState>(),)
         );
+      case Routes.dashboardPageRoute:
+        return navigateToScreen(
+          settings: settings,
+          route: const DashBoard(),
+        );
+
       case Routes.profilePageRoute:
         return navigateToScreen(
           settings: settings,
           route: const ProfilePage(),
         );
+
       case Routes.calenderPageRoute:
         return navigateToScreen(
           settings: settings,
