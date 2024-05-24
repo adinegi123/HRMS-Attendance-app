@@ -15,7 +15,6 @@ class ImagePick extends StatelessWidget {
   final ImageCropper _imageCropper = ImageCropper();
 
   Future<CroppedFile?> uploadImage(
-
       {required ImageSource source, required BuildContext context}) async {
     var resImage = await _imagePicker.pickImage(source: source);
     if (resImage != null) {
@@ -72,6 +71,8 @@ class ImagePick extends StatelessWidget {
                           var croppedImage = await uploadImage(
                               source: ImageSource.camera, context: context);
                           if (croppedImage != null) {
+                            Provider.of<ImagePickerProvider>(context, listen: false).uploadPicture(croppedImage);
+                            Navigator.pop(context);
                           }
                           // positive case
                           // ignore: use_build_context_synchronously
