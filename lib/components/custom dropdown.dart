@@ -11,6 +11,7 @@ class CustomDropDownMenu extends StatelessWidget {
         this.hintText,
         this.decoration,
         this.contentPadding,
+        this.color,
         this.floatingLabelBehavior,
         this.leadingIcon,
         this.label,
@@ -21,6 +22,7 @@ class CustomDropDownMenu extends StatelessWidget {
   final Object? initialSelection;
   final double? width;
   final String? hintText;
+  final Color? color;
   final InputDecorationTheme? decoration;
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? floatingLabelBehavior;

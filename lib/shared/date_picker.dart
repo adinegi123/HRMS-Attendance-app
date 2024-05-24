@@ -100,9 +100,11 @@ class DatePicker extends StatelessWidget {
                        Navigator.pop(context);
                      },
                      buttonText: const Center(
-                       child: Text(
-                         'Submit',
-                         style: TextStyle(color: Colors.white),
+                       child: Center(
+                         child: Text(
+                           'Submit',
+                           style: TextStyle(color: Colors.white),
+                         ),
                        ),
                      ),
                    ),
