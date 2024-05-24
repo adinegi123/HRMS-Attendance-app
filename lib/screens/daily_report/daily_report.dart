@@ -21,6 +21,16 @@ class _DailyReportState extends State<DailyReport> {
   final TextEditingController dateController = TextEditingController();
 
   @override
+  void dispose() {
+    reportType.dispose();
+    projectName.dispose();
+    pointers.dispose();
+    issues.dispose();
+    dateController.dispose()
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade100,
