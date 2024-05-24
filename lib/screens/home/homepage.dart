@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Consumer<BottomNavBarProvider>(
       builder: (context, bottomNavBarProvider, _) {
+
         final List<Widget> pages = [
           const DashBoard(),
           const CalendarPage(),

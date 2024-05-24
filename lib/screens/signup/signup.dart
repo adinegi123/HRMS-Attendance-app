@@ -552,7 +552,7 @@ class _SignUpState extends State<SignUp> {
                         padding: const EdgeInsets.only(top: 20.0, bottom: 20),
                         child: Buttons(
                           onTap: () async {
-                            if (widget._formKey.currentState!.validate()) {
+                            if (widget._formKey.currentState!.validate() ) {
                               CustomPopup.showProgressIndicator(
                                   context: context);
                               LocationServiceProvider locationServiceProvider =

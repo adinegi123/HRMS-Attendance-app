@@ -10,7 +10,6 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
-
   /*List imageList = [
     {"id": 1, "image_path": 'assets/images/carousel_img.jpg'},
     {"id": 2, "image_path": 'assets/images/carousel_img.jpg'},
@@ -19,8 +18,11 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return Column(children: [
+      const SizedBox(
+        height: 100,
+      ),
+      Container(
         child: CarouselSlider(
           items: [1, 2, 3].map((i) {
             return Container(
@@ -39,11 +41,13 @@ class _DashBoardState extends State<DashBoard> {
             );
           }).toList(),
           options: CarouselOptions(
-            height: 100,
-          ),
+              autoPlay: true,
+              height: 100,
+              aspectRatio: 1 / 4,
+              clipBehavior: Clip.hardEdge),
         ),
-      ),
-    );
+      )
+    ]);
 
     /*Scaffold(
       body: Column(
