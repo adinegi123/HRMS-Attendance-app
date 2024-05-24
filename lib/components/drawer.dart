@@ -59,6 +59,18 @@ class Drawers extends StatelessWidget {
             },
           ),
           ListTile(
+            title: const Text('Leave Approval'),
+            leading: const Icon(Icons.info),
+            trailing: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 18,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, Routes.leaveApprovalRoute);
+            },
+          ),
+          ListTile(
             title: const Text('Log Out'),
             leading: const Icon(Icons.logout),
             onTap: () {
