@@ -1,7 +1,10 @@
 import 'package:attendance_app/routes/route_const.dart';
+import 'package:attendance_app/screens/apply_for_leave/apply_leave.dart';
 import 'package:attendance_app/screens/calender_page/calender_page.dart';
+import 'package:attendance_app/screens/daily_report/daily_report.dart';
 import 'package:attendance_app/screens/dashboard/view/dashboard_view.dart';
 import 'package:attendance_app/screens/home/homepage.dart';
+import 'package:attendance_app/screens/leave_approval/leave_approval.dart';
 import 'package:attendance_app/screens/login/login.dart';
 import 'package:attendance_app/screens/profile/profile_page.dart';
 import 'package:attendance_app/screens/signup/signup.dart';
@@ -55,6 +58,21 @@ class RouteGenerator {
         return navigateToScreen(
           settings: settings,
           route: const DashBoard(),
+        );
+        case Routes.leaveApprovalRoute:
+        return navigateToScreen(
+          settings: settings,
+          route: const LeaveApproval(),
+        );
+        case Routes.applyLeavePageRoute:
+        return navigateToScreen(
+          settings: settings,
+          route: const ApplyLeave(),
+        );
+        case Routes.dailyReportPageRoute:
+        return navigateToScreen(
+          settings: settings,
+          route: const DailyReport(),
         );
 
       case Routes.profilePageRoute:
