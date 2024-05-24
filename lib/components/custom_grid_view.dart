@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomGridView extends StatelessWidget {
   final List<String> itemNames;
-  final List<String?> iconPaths;// Required: List of icon data
+  final List<String?> iconPaths;
   final List<Color>? itemColors;
   final List<Widget> targetScreens;
   final double crossAxisCount;
@@ -43,9 +43,9 @@ class CustomGridView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    iconPaths[index]!, // Load icon from asset path
-                    height: 40, // Adjust height as needed
-                    width: 40, // Adjust width as needed
+                    iconPaths[index]!,
+                    height: 40,
+                    width: 40,
                   ),
                   const SizedBox(height: 15.0),
                   Text(
