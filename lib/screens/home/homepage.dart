@@ -2,6 +2,7 @@ import 'package:attendance_app/class/constant.dart';
 import 'package:attendance_app/components/secondary_appbar.dart';
 import 'package:attendance_app/providers/bottom_navbar_provider.dart';
 import 'package:attendance_app/screens/calender_page/calender_page.dart';
+import 'package:attendance_app/screens/dashboard/view/dashboard_view.dart';
 
 import 'package:attendance_app/screens/profile/profile_page.dart';
 import 'package:attendance_app/components/drawer.dart';
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
     return Consumer<BottomNavBarProvider>(
       builder: (context, bottomNavBarProvider, _) {
         final List<Widget> pages = [
+          const DashBoard(),
           const CalendarPage(),
           const ProfilePage(),
         ];
@@ -52,6 +54,10 @@ class _HomeState extends State<Home> {
                 //   icon: Icon(Icons.home),
                 //   label: 'Home',
                 // ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Dashboard',
+                ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.calendar_today),
                   label: 'Calendar',
