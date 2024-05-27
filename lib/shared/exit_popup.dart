@@ -8,7 +8,7 @@ Future<bool> showExitPopup(context) async{
       builder: (BuildContext context) {
         return AlertDialog(
           content: Container(
-            height: 120,
+            height: 130,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
