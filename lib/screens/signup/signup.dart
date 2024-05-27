@@ -635,7 +635,17 @@ class _SignUpState extends State<SignUp> {
                               }
                             }
                           },
-                          buttonText: const Center(child: Text('Sign up')),
+                          buttonText: const Center(
+                            child: Center(
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(

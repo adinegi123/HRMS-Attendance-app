@@ -41,23 +41,23 @@ class _DailyReportState extends State<DailyReport> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MyTextWidget(text: "Report Type"),
+            const MyTextWidget(text: "Report Type"),
             MyTextField(hintText: "Enter Report type",
               controller: reportType,
             ),
-            MyTextWidget(text: "Project Name"),
+            const MyTextWidget(text: "Project Name"),
             MyTextField(hintText: "Project Name",
               controller: projectName,
             ),
-            MyTextWidget(text: "Pointers"),
+            const MyTextWidget(text: "Pointers"),
             MyTextField(hintText: "Today's Pointers",
               controller: pointers,
             ),
-            MyTextWidget(text: "Issues"),
+            const MyTextWidget(text: "Issues"),
             MyTextField(hintText: "Issues that encountered",
               controller: issues,
             ),
-            MyTextWidget(text: "Date"),
+            const MyTextWidget(text: "Date"),
             MyTextField(
               hintText: "Enter Date",
               controller: dateController,
@@ -66,13 +66,14 @@ class _DailyReportState extends State<DailyReport> {
                 child: const Icon(Icons.calendar_month),
               ),
             ),
-            SizedBox(height: 50,),
+            const SizedBox(height: 50,),
             Center(
-              child: Buttons(onTap: (){}, buttonText: Center(
+              child: Buttons(onTap: (){}, buttonText: const Center(
                 child: Text("Submit",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16
+                    fontSize: 16,
+                    color: Colors.white
                   ),
                 ),
               )),

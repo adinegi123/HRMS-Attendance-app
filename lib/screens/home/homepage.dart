@@ -40,7 +40,8 @@ class _HomeState extends State<Home> {
               screenName: 'Attendance',
               leading: Builder(
                 builder: (context) => IconButton(
-                  icon: const Icon(Icons.menu),
+                  icon: const Icon(Icons.menu,
+                    color: Colors.white,),
                   onPressed: () {
                     Scaffold.of(context).openDrawer();
                   },
@@ -50,26 +51,29 @@ class _HomeState extends State<Home> {
             body: SingleChildScrollView(
                 child: pages[bottomNavBarProvider.selectedIndex]),
             bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: Colors.deepPurple.shade300,
               items: const <BottomNavigationBarItem>[
                 // BottomNavigationBarItem(
                 //   icon: Icon(Icons.home),
                 //   label: 'Home',
                 // ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
+                  icon: Icon(Icons.home, color: Colors.white,),
                   label: 'Dashboard',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.calendar_today),
+                  icon: Icon(Icons.calendar_month,color: Colors.white,),
                   label: 'Calendar',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
+                  icon: Icon(Icons.person,color: Colors.white,),
                   label: 'Profile',
                 ),
               ],
               currentIndex: bottomNavBarProvider.selectedIndex,
-              selectedItemColor: ColorConst.appPurpleColor,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.white54,
+
               onTap: (index) {
                 bottomNavBarProvider.setIndex(index);
               },

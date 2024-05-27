@@ -30,7 +30,7 @@ class LogoutPopup extends StatelessWidget {
          ),
        ],*/
          content: Container(
-           height: 120,
+           height: 130,
            child: Column(
              crossAxisAlignment: CrossAxisAlignment.center,
              children: [

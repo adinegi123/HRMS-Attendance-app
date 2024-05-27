@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../class/constant.dart';
 
 class CustomDropDownMenu extends StatelessWidget {
@@ -18,6 +17,7 @@ class CustomDropDownMenu extends StatelessWidget {
         this.trailingIcon,
         this.onSelect,
         this.controller});
+
   final List<DropdownMenuEntry<Object?>> dropdownMenuEntries;
   final Object? initialSelection;
   final double? width;
