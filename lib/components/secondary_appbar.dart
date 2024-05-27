@@ -31,7 +31,7 @@ class SecondaryAppBar extends StatelessWidget implements PreferredSizeWidget {
             onTap: () => Navigator.of(context).maybePop(),
             child: const Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
       automaticallyImplyLeading: false,
