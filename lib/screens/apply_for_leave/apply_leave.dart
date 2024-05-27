@@ -2,6 +2,7 @@ import 'package:attendance_app/components/buttons.dart';
 import 'package:attendance_app/components/custom_text_widget.dart';
 import 'package:attendance_app/components/my_textfields.dart';
 import 'package:attendance_app/components/secondary_appbar.dart';
+import 'package:attendance_app/components/text_widget.dart';
 import 'package:flutter/material.dart';
 import '../../components/custom dropdown.dart';
 
@@ -32,6 +33,18 @@ class _ApplyLeaveState extends State<ApplyLeave> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /*MyTextWidget(text: "Leave application", style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+            ),),*/
+            SizedBox(height: 15,),
+            TextWidget(text: "Please provide Application about your Leave.",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+
             const MyTextWidget(text: "Reason For Leave"),
             Center(
               child: CustomDropDownMenu(
@@ -73,7 +86,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
             const SizedBox(height: 50,),
             Center(child: Buttons(onTap: (){},
                 buttonText: const Center(
-                    child: Text("Submit", style: TextStyle(
+                    child: Text("Apply Leave", style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),)

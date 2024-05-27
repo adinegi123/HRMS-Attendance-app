@@ -178,7 +178,13 @@ class _LoginState extends State<Login> {
                               }
                             }
                           },
-                          buttonText: const Center(child: Text('Login')),
+                          buttonText: const Center(
+                              child: Text('Login',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16
+                                ),)),
                         ),
                         const SizedBox(
                           height: 20,

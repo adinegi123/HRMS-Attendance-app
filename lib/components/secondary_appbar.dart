@@ -18,7 +18,7 @@ class SecondaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.deepPurple.shade400,
       elevation: 5,
       /*systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -40,7 +40,7 @@ class SecondaryAppBar extends StatelessWidget implements PreferredSizeWidget {
           Text(
             screenName,
             style: const TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
