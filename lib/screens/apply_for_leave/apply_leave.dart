@@ -80,7 +80,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
               controller: startDateController,
               suffixIcon: GestureDetector(
                 onTap: () => CustomPopup.showDatePicker(context: context, DOB: startDateController),
-                child: const Icon(Icons.calendar_month),
+                child: const Icon(Icons.calendar_month_rounded),
               ),
             ),
             const MyTextWidget(text: "End Date",),

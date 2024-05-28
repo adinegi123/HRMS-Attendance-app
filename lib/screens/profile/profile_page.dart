@@ -6,6 +6,7 @@ import 'package:attendance_app/models/user_model.dart';
 import 'package:attendance_app/providers/image_provider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/my_textfields.dart';
@@ -43,6 +44,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    String currentdate = DateFormat('dd MMM yyyy').format(DateTime.now());
+
     return Consumer<ImagePickerProvider>(builder: (context, value, child) {
       return Column(
         children: [
@@ -75,8 +79,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     child: Column(
                       children: [
-                        const Text(
-                          '20 Jan 2023',
+                        Text(
+                          currentdate,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
