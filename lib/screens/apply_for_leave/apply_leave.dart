@@ -5,6 +5,7 @@ import 'package:attendance_app/components/secondary_appbar.dart';
 import 'package:attendance_app/components/text_widget.dart';
 import 'package:flutter/material.dart';
 import '../../components/custom dropdown.dart';
+import '../../components/custom_popup.dart';
 
 class ApplyLeave extends StatefulWidget {
   const ApplyLeave({super.key});
@@ -26,6 +27,15 @@ class _ApplyLeaveState extends State<ApplyLeave> {
   TextEditingController reason = TextEditingController();
 
   @override
+  void dispose() {
+    startDateController.dispose();
+    endDateController.dispose();
+    totalDaysController.dispose();
+    reason.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const SecondaryAppBar(screenName: "Apply for Leave"),
@@ -37,8 +47,8 @@ class _ApplyLeaveState extends State<ApplyLeave> {
               fontSize: 20,
               fontWeight: FontWeight.bold
             ),),*/
-            SizedBox(height: 15,),
-            TextWidget(text: "Please provide Application about your Leave.",
+            const SizedBox(height: 15,),
+            const TextWidget(text: "Please provide Application about your Leave.",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold
@@ -68,12 +78,18 @@ class _ApplyLeaveState extends State<ApplyLeave> {
             const MyTextWidget(text: "Start Date"),
             MyTextField(hintText: "Select Start Date",
               controller: startDateController,
-              suffixIcon: const Icon(Icons.calendar_month),
+              suffixIcon: GestureDetector(
+                onTap: () => CustomPopup.showDatePicker(context: context, DOB: startDateController),
+                child: const Icon(Icons.calendar_month),
+              ),
             ),
             const MyTextWidget(text: "End Date",),
             MyTextField(hintText: "Select End Date",
               controller: endDateController,
-              suffixIcon: const Icon(Icons.calendar_month),
+              suffixIcon: GestureDetector(
+                onTap: () => CustomPopup.showDatePicker(context: context, DOB: endDateController),
+                child: const Icon(Icons.calendar_month),
+              ),
             ),
             const MyTextWidget(text: "Number Of Days"),
             MyTextField(hintText: "No. Of Days",

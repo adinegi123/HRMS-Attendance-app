@@ -42,7 +42,7 @@ class Utils {
   static List<int> getYears() {
     final DateTime now = DateTime.now();
     List<int> returnList = [];
-    for (int i = 0; i < 70; i++) {
+    for (int i = 0; i < 10; i++) {
       returnList.add(now.subtract(Duration(days: i * 365)).year);
     }
     print(returnList);
