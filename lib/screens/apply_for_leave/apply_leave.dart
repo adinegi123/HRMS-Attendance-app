@@ -26,6 +26,15 @@ class _ApplyLeaveState extends State<ApplyLeave> {
   TextEditingController reason = TextEditingController();
 
   @override
+  void dispose() {
+    startDateController.dispose();
+    endDateController.dispose();
+    totalDaysController.dispose();
+    reason.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const SecondaryAppBar(screenName: "Apply for Leave"),
