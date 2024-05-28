@@ -42,19 +42,23 @@ class _DailyReportState extends State<DailyReport> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const MyTextWidget(text: "Report Type"),
-            MyTextField(hintText: "Enter Report type",
+            MyTextField(
+              hintText: "Enter Report type",
               controller: reportType,
             ),
             const MyTextWidget(text: "Project Name"),
-            MyTextField(hintText: "Project Name",
+            MyTextField(
+              hintText: "Project Name",
               controller: projectName,
             ),
             const MyTextWidget(text: "Pointers"),
-            MyTextField(hintText: "Today's Pointers",
+            MyTextField(
+              hintText: "Today's Pointers",
               controller: pointers,
             ),
             const MyTextWidget(text: "Issues"),
-            MyTextField(hintText: "Issues that encountered",
+            MyTextField(
+              hintText: "Issues that encountered",
               controller: issues,
             ),
             const MyTextWidget(text: "Date"),
@@ -62,21 +66,26 @@ class _DailyReportState extends State<DailyReport> {
               hintText: "Enter Date",
               controller: dateController,
               suffixIcon: GestureDetector(
-                onTap: () => CustomPopup.showDatePicker(context: context, DOB: dateController),
+                onTap: () => CustomPopup.showDatePicker(
+                    context: context, DOB: dateController),
                 child: const Icon(Icons.calendar_month),
               ),
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
             Center(
-              child: Buttons(onTap: (){}, buttonText: const Center(
-                child: Text("Submit",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.white
-                  ),
-                ),
-              )),
+              child: Buttons(
+                  onTap: () {},
+                  buttonText: const Center(
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white),
+                    ),
+                  )),
             )
           ],
         ),
